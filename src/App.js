@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React, { useState, useEffect } from 'react'
+import Viewcharacter from './viewcharacter'
+
+const App = () => {
+  const [enter, setenter] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <article id={`${enter ? "main_container_change" : "main_container"}`}>
+      {enter ? <Viewcharacter />
+        : <>
+          <section className="frontleft_container">
+            <p className="leftpara ">Movies ,Series , Subreddits . . .</p>
+          </section>
+
+
+          <section className="frontcenter_container">
+
+            <button className="enterbtn" onClick={() => { setenter(true) }}>START</button>
+          </section>
+          <section className="frontright_container animate__animated animate__backInUp">
+
+         
+              <p className="frontpara">Get a movie reccomendation based on a movie you have watched before.</p>
+              <p className="frontpara">Search a movie you have watched old / new and get multiple movies simmilar to it !</p>
+     
+          </section>
+
+
+        </>
+      }
+    </article>
+  )
 }
 
-export default App;
+export default App

@@ -1,13 +1,128 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Vujahday+Script&display=swap');
+
+*,::after,::before {
+  box-sizing: border-box;
+}
+body,div,article,section {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+}
+#root {
+  background-color: #919996;
+  width: 100%;
+  min-height: 100vh;
+}
+.frontleft_container {
+  width : 30%;
+}
+.frontright_container {
+  width : 30%;
+}
+.frontcenter_container {
+  align-self: center;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.leftpara {
+  margin-top: 51%;
+  font-family: 'Vujahday Script', cursive;
+  font-size: 1.4rem;
+  padding-left: 5%;
+  font-weight: 900;
+
+  animation: lightSpeedInLeft; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 10s;
+}
+.frontpara { 
+  font-family: 'Vujahday Script', cursive;
+  font-size: 1.8rem;
+  color: brown;
+}
+.enterbtn {
+  padding: .7rem 4rem;
+  background-color: rgba(0,0,0,.6);
+  color: rgb(253, 250, 250);
+  font-size: 2rem;
+  font-family: cursive;
+  font-weight: 900;
+  border : none;
+  margin-top: 1%;
+  animation: zoomIn; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1.5s;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+#main_container {
+  display: flex;
+  justify-content: center;
+  height : 100vh;
+  background-image: url("./imgs/3.jpg");
+  background-size: cover;
+}
+#main_container_change {
+  display: flex;
+  justify-content: center;
+  height : 100vh;
+}
+
+.subcontainer {
+  width : 100%;
+  margin-top: 3%;
+}
+
+.enterbtn:hover,
+.enterbtn:focus { 
+  background-color: rgb(107, 41, 17);
+}
+
+.searchinput {
+  background-color: inherit;
+  color: white;
+  border : none;
+  border-bottom: 1px solid #666;
+  outline: none;
+  width: 30%;
+  margin-left: 35%;
+  padding: .5rem;
+  font-size: 1rem;
+}
+.cardscontainer {
+  margin-left: 2%;
+}
+.section_title { 
+  font-family: cursive;
+  text-transform: uppercase;
+  color: white;
+  margin-top: 4%;
+  margin-left: 2%;
+}
+.cards {
+  width : 19%;
+  margin-left: 1%;
+  display: inline-grid;
+  display: -ms-inline-grid;
+  display: -moz-inline-grid;
+}
+.cardsrank { 
+  color : #fff49e;
+}
+.cardsimg { 
+  width : 55%;
+  margin: 0 auto;
+}
+.cardstitle { 
+  font-size: .9rem;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 800;
+  text-align: center;
+}
+
+.cards-alltime {
+  width : 23%;
+  margin-left: 2%;
+  display: inline-grid;
+  display: -ms-inline-grid;
+  display: -moz-inline-grid;
 }

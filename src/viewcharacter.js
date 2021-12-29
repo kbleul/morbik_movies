@@ -6,65 +6,56 @@ const Viewcharacter = () => {
 
   const [boxoffice, setboxoffice] = useState([]);
   const [alltime_boxoffice, setalltime_boxoffice] = useState([]);
-/*
-  let alltime_imagesobject = new Map();
 
-  var axios = require("axios").default;
-
-  var options = {
-    method: 'GET',
-    url: 'https://movies-tvshows-data-imdb.p.rapidapi.com/',
-    params: { type: 'get-boxoffice-movies', page: '1' },
-    headers: {
-      'x-rapidapi-host': 'movies-tvshows-data-imdb.p.rapidapi.com',
-      'x-rapidapi-key': '6f086cff7fmshc85ad17d299aa15p12cc18jsn020d508320bc'
-    }
-  };
 
   useEffect(() => {
+
     const fetchitems = async () => {
       try {
-        const boxoffice_response = await
-          fetch("https://movie-database-imdb-alternative.p.rapidapi.com/?i=tt4154796&r=json", {
-            "method": "GET",
-            "headers": {
-              "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
-              "x-rapidapi-key": "6f086cff7fmshc85ad17d299aa15p12cc18jsn020d508320bc"
-            }
-          });
+        const boxoffice_response = await axios("https://api.themoviedb.org/3/movie/popular?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1");
+        setboxoffice(boxoffice_response.data.results)
 
+        const alltime_boxoffice_response = await axios("https://api.themoviedb.org/3/movie/top_rated?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1");
+        setalltime_boxoffice(alltime_boxoffice_response.data.results)
 
-        console.log(boxoffice_response.data)
-      } catch (error) { console.log("Fetch boxoffice movies failed" + error); }
-
+      } catch (error) {
+        console.log("Error: Fetch movies failed.");
+      }
     }
+
     fetchitems();
+  }, []);
 
-  }, [])  */
 
-  
   return (<article className="subcontainer">
     <Search />
-    <h3 className="section_title">box office</h3>
+    <h3 className="section_title">favorites now</h3>
     <section className="cardscontainer">
       {boxoffice.map(item => (
         <section className="cards">
-          <h5 className="cardsrank" key={item.id}>{item.rank}</h5>
-          <img className="cardsimg" key={`${item.id}${item.rank}`} alt="" src={item.image} />
-          <p className="cardstitle">{item.title}</p>
+          <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+
+          <div className="ratetitle_container">
+            <p className="cardstitle" key={item.title}>{item.title}</p>
+            <p className="cardsrating">{item.vote_average}</p>
+          </div>
         </section>
       )
 
       )}
     </section>
 
-    <h3 className="section_title">box office -all time</h3>
+    <h3 className="section_title">top rated - all time</h3>
     <section className="cardscontainer">
       {alltime_boxoffice.map(item => (
         <section className="cards-alltime">
-          <h5 className="cardsrank" key={item.id}>{item.rank}</h5>
-          <img className="cardsimg" key={`${item.id}${item.rank}`} alt="" src="https://imdb-api.com/images/original/MV5BMjE5MzcyNjk1M15BMl5BanBnXkFtZTcwMjQ4MjcxOQ@@._V1_Ratio0.7015_AL_.jpg" />
-          <p className="cardstitle">{item.title}</p>
+          <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+
+          <div className="ratetitle_container">
+            <p className="cardstitle" key={item.title}>{item.title}</p>
+            <p className="cardsrating">{item.vote_average} ✯</p>
+          </div>
+
         </section>
       )
 

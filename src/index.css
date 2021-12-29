@@ -3,20 +3,21 @@
 *,::after,::before {
   box-sizing: border-box;
 }
-body,div,article,section {
+body,div,article,section,h1,h2,h3 {
   margin: 0;
   padding: 0;
 }
 #root {
-  background-color: #919996;
   width: 100%;
-  min-height: 100vh;
 }
 .frontleft_container {
   width : 30%;
 }
 .frontright_container {
   width : 30%;
+
+  animation: backInUp; 
+  animation-duration: 2s;
 }
 .frontcenter_container {
   align-self: center;
@@ -32,7 +33,7 @@ body,div,article,section {
   padding-left: 5%;
   font-weight: 900;
 
-  animation: lightSpeedInLeft; /* referring directly to the animation's @keyframe declaration */
+  animation: lightSpeedInLeft; 
   animation-duration: 10s;
 }
 .frontpara { 
@@ -79,7 +80,7 @@ body,div,article,section {
 
 .searchinput {
   background-color: inherit;
-  color: white;
+  color: black;
   border : none;
   border-bottom: 1px solid #666;
   outline: none;
@@ -88,19 +89,16 @@ body,div,article,section {
   padding: .5rem;
   font-size: 1rem;
 }
-.cardscontainer {
-  margin-left: 2%;
-}
 .section_title { 
   font-family: cursive;
   text-transform: uppercase;
-  color: white;
-  margin-top: 4%;
-  margin-left: 2%;
+  color: #165505;
+  font-size: 2rem;
+  border-bottom: 1px solid darkgray;
+  margin: 4% 2% 2% 2%;
 }
 .cards {
-  width : 19%;
-  margin-left: 1%;
+  width : 20%;
   display: inline-grid;
   display: -ms-inline-grid;
   display: -moz-inline-grid;
@@ -109,19 +107,31 @@ body,div,article,section {
   color : #fff49e;
 }
 .cardsimg { 
-  width : 55%;
+  width : 95%;
   margin: 0 auto;
+}
+.ratetitle_container {
+  display: flex;
+  justify-content: space-between;
 }
 .cardstitle { 
   font-size: .9rem;
   font-family: 'Times New Roman', Times, serif;
   font-weight: 800;
   text-align: center;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.cardsrating { 
+  width: 28%;
+  margin-right: 2%;
+  text-align: end;
 }
 
 .cards-alltime {
   width : 23%;
-  margin-left: 2%;
+  margin-left: 1%;
+  margin-right: 1%;
   display: inline-grid;
   display: -ms-inline-grid;
   display: -moz-inline-grid;

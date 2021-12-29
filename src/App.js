@@ -18,7 +18,7 @@ const App = () => {
 
             <button className="enterbtn" onClick={() => { setenter(true) }}>START</button>
           </section>
-          <section className="frontright_container animate__animated animate__backInUp">
+          <section className="frontright_container">
 
          
               <p className="frontpara">Get a movie reccomendation based on a movie you have watched before.</p>

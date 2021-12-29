@@ -3,10 +3,10 @@ import axios from 'axios'
 import Search from './search'
 
 const Viewcharacter = () => {
-
+/*
   const [boxoffice, setboxoffice] = useState([]);
   const [alltime_boxoffice, setalltime_boxoffice] = useState([]);
-/*
+
   let alltime_imagesobject = new Map();
 
   var axios = require("axios").default;

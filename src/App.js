@@ -1,11 +1,13 @@
 
 import React, { useState } from 'react'
 import Viewcharacter from './viewcharacter'
+import Footer from './fotter'
+
 
 const App = () => {
   const [enter, setenter] = useState(false);
 
-  return (
+  return (<>
     <article id={`${enter ? "main_container_change" : "main_container"}`}>
       {enter ? <Viewcharacter />
         : <>
@@ -26,10 +28,11 @@ const App = () => {
      
           </section>
 
-
         </>
       }
     </article>
+    <Footer />
+      </>
   )
 }
 

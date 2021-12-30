@@ -89,8 +89,9 @@ body,div,article,section,h1,h2,h3 {
   padding: .5rem;
   font-size: 1rem;
 }
+.loadingimg { margin-left: 40%; }
+
 .section_title { 
-  font-family: cursive;
   text-transform: uppercase;
   color: #165505;
   font-size: 2rem;

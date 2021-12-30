@@ -2,9 +2,9 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <fotter>
+        <footer>
             <p>api.themoviedb.org</p>
-        </fotter>
+        </footer>
     )
 }
 

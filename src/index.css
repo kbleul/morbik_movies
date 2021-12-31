@@ -104,6 +104,9 @@ body,div,article,section,h1,h2,h3 {
   display: -ms-inline-grid;
   display: -moz-inline-grid;
 }
+.cards:hover,
+.cardsimg:hover { opacity: .7; }
+
 .cardsrank { 
   color : #fff49e;
 }
@@ -137,3 +140,49 @@ body,div,article,section,h1,h2,h3 {
   display: -ms-inline-grid;
   display: -moz-inline-grid;
 }
+
+/*--------------Top image -----------------------*/
+#topimage_div {
+  height: 80%;
+  position : relative;
+}
+#topimage_article { 
+  width: 100%; 
+  height: 100vh;
+  margin-top: 3%;
+}
+	#firstsection {
+		background-image: url("https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg");
+		background-color: gray;
+		height: 70vh;
+		padding: 0;
+		width: 79%;
+		margin:0 auto;
+    opacity: .75;
+	}
+	#secondsection {
+		position: absolute;
+		top: 0;
+		left: 10%;
+		background-image: url("https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg");
+		background-color: rgb(95, 58, 58);
+		clip-path: polygon(60% 0, 100% 0,100% 100%,35% 100%);
+		height: 70vh;
+		margin: 0 auto;
+		padding: 0;
+		width: 80%;
+	}
+
+  .subtitle { 
+    text-align: center;
+    font-weight: bold;
+  }
+  .nextbtn {
+    float: right;
+    margin-right: 10%;
+    margin-top: 3%;
+    border: none;
+    background-color: inherit;
+    font-size: 3rem;
+}
+  

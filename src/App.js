@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react'
 import Viewcharacter from './viewcharacter'
-import Footer from './fotter'
 
 
 const App = () => {
@@ -31,7 +30,6 @@ const App = () => {
         </>
       }
     </article>
-    <Footer />
       </>
   )
 }

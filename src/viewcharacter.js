@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Search from './search'
+import TopImage from './TopImage'
 import loading from './imgs/loading.gif'
 
 const Viewcharacter = () => {
@@ -9,7 +10,10 @@ const Viewcharacter = () => {
   const [alltime_boxoffice, setalltime_boxoffice] = useState([]);
   const [tvshow, settvshow] = useState([]);
   const [alltime_tvshow, set_alltime_tvshow] = useState([]);
-  const [isloading , set_isloading] = useState(true);
+  const [isloading, set_isloading] = useState(true);
+  const [showrecommendation, set_showrecommendation] = useState(false);
+  const [topimgurl , set_topimgurl] = useState(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg" , 
+                                                ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"]])
 
 
 
@@ -40,84 +44,108 @@ const Viewcharacter = () => {
     fetchitems();
   }, []);
 
+  const handleShowRecommendation = async (item) => {
+
+         try {
+           const fetchrecommendations = await axios(`https://api.themoviedb.org/3/movie/${item.id}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
+           
+           set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`,fetchrecommendations.data.results]);
+           set_showrecommendation(true);
+
+         }  catch  {  console.log("Fetch recommendations error.")  }
+
+  }
 
   return (<article className="subcontainer">
     <Search />
-    <h3 className="section_title">Popular</h3>
-    {
-      isloading ? <img src={loading} alt="loading" className="loadingimg"/> :
+    <p className="subtitle">Pick a movie you have watched.</p>
+    <TopImage imgurl={topimgurl}/>
 
-    <section className="cardscontainer">
-      {boxoffice.map(item => (
-        <section key={`${item.id}${item.title}`}  className="cards">
-          <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+   { showrecommendation ? 
+       <section className="reccomendationpage_container">
+       </section> 
+      : 
+       <section className="frontpage_conatiner">
+      <h3 className="section_title">Popular</h3>
+      {
+        isloading ? <img src={loading} alt="loading" className="loadingimg" /> :
 
-          <div className="ratetitle_container">
-            <p className="cardstitle" key={item.title}>{item.title}</p>
-            <p className="cardsrating">{item.vote_average}</p>
-          </div>
-        </section>
-      )
+          <section className="cardscontainer">
+            {boxoffice.map(item => (
+              <section onClick={() => handleShowRecommendation(item)} key={`${item.id}${item.title}`} className="cards">
+                <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
 
-      )}
-    </section>
+                <div className="ratetitle_container">
+                  <p className="cardstitle" key={item.title}>{item.title}</p>
+                  <p className="cardsrating">{item.vote_average}</p>
+                </div>
+              </section>
+            )
+
+            )}
+          </section>
       }
 
-    <h3 className="section_title">top rated - all time</h3>
-  { !isloading &&  <section className="cardscontainer">
-      {alltime_boxoffice.map(item => (
-        <section key={`${item.id}${item.title}`}  className="cards-alltime">
-          <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} 
-          src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+      <h3 className="section_title">top rated - all time</h3>
+      {!isloading && <section className="cardscontainer">
+        {alltime_boxoffice.map(item => (
+          <section key={`${item.id}${item.title}`} className="cards-alltime">
+            <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title}
+              src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
 
-          <div className="ratetitle_container">
-            <p className="cardstitle" key={item.title}>{item.title}</p>
-            <p className="cardsrating">{item.vote_average} ✯</p>
-          </div>
+            <div className="ratetitle_container">
+              <p className="cardstitle" key={item.title}>{item.title}</p>
+              <p className="cardsrating">{item.vote_average} ✯</p>
+            </div>
 
+          </section>
+        )
+
+        )}
+      </section>
+      }
+
+      <h3 className="section_title">popular tv-shows</h3>
+      {!isloading && <section className="cardscontainer">
+        {tvshow.map(item => (
+          <section key={`${item.id}${item.name}`} className="cards">
+            <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.name}
+              src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+
+            <div className="ratetitle_container">
+              <p className="cardstitle" key={item.name}>{item.name}</p>
+              <p className="cardsrating">{item.vote_average}</p>
+            </div>
+          </section>
+        )
+
+        )}
+      </section>
+      }
+
+
+      <h3 className="section_title">top rated - all time</h3>
+      {!isloading &&
+        <section className="cardscontainer">
+          {alltime_tvshow.map(item => (
+            <section key={`${item.id}${item.name}`} className="cards-alltime">
+              <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.name}
+                src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+
+              <div className="ratetitle_container">
+                <p className="cardstitle" key={item.name}>{item.name}</p>
+                <p className="cardsrating">{item.vote_average} ✯</p>
+              </div>
+
+            </section>
+          )
+
+          )}
         </section>
-      )
-
-      )}
-    </section>
+      }
+    </section> 
+  
   }
-
-    <h3 className="section_title">popular tv-shows</h3>
-   { !isloading && <section className="cardscontainer">
-      {tvshow.map(item => (
-        <section key={`${item.id}${item.name}`}  className="cards">
-          <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
-
-          <div className="ratetitle_container">
-            <p className="cardstitle" key={item.name}>{item.name}</p>
-            <p className="cardsrating">{item.vote_average}</p>
-          </div>
-        </section>
-      )
-
-      )}
-    </section>}
-
-
-    <h3 className="section_title">top rated - all time</h3>
-  { !isloading &&
-     <section className="cardscontainer">
-      {alltime_tvshow.map(item => (
-        <section key={`${item.id}${item.name}`} className="cards-alltime">
-          <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} 
-          src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
-
-          <div className="ratetitle_container">
-            <p className="cardstitle" key={item.name}>{item.name}</p>
-            <p className="cardsrating">{item.vote_average} ✯</p>
-          </div>
-
-        </section>
-      )
-
-      )}
-    </section>
-      }
   </article>
   )
 }

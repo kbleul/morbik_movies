@@ -11,10 +11,10 @@ const Viewcharacter = () => {
   const [tvshow, settvshow] = useState([]);
   const [alltime_tvshow, set_alltime_tvshow] = useState([]);
   const [isloading, set_isloading] = useState(true);
+  const [shownextbtn , set_shownextbtn] = useState(false);
   const [showrecommendation, set_showrecommendation] = useState(false);
   const [topimgurl , set_topimgurl] = useState(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg" , 
                                                 ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"]])
-
 
 
   useEffect(() => {
@@ -34,8 +34,6 @@ const Viewcharacter = () => {
         set_alltime_tvshow(alltime_tvshow_response.data.results)
         set_isloading(false);
 
-
-
       } catch (error) {
         console.log("Error: Fetch movies failed.");
       }
@@ -51,6 +49,7 @@ const Viewcharacter = () => {
            
            set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`,fetchrecommendations.data.results]);
            set_showrecommendation(true);
+           set_shownextbtn(true);
 
          }  catch  {  console.log("Fetch recommendations error.")  }
 
@@ -59,7 +58,7 @@ const Viewcharacter = () => {
   return (<article className="subcontainer">
     <Search />
     <p className="subtitle">Pick a movie you have watched.</p>
-    <TopImage imgurl={topimgurl}/>
+    <TopImage imgurl={topimgurl} nextbtn={shownextbtn} showrec={showrecommendation}/>
 
    { showrecommendation ? 
        <section className="reccomendationpage_container">
@@ -73,7 +72,8 @@ const Viewcharacter = () => {
           <section className="cardscontainer">
             {boxoffice.map(item => (
               <section onClick={() => handleShowRecommendation(item)} key={`${item.id}${item.title}`} className="cards">
-                <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+                <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} 
+                src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
 
                 <div className="ratetitle_container">
                   <p className="cardstitle" key={item.title}>{item.title}</p>

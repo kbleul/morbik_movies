@@ -46,7 +46,6 @@ body,div,article,section,h1,h2,h3 {
   background-color: rgba(0,0,0,.6);
   color: rgb(253, 250, 250);
   font-size: 2rem;
-  font-family: cursive;
   font-weight: 900;
   border : none;
   margin-top: 1%;
@@ -185,4 +184,17 @@ body,div,article,section,h1,h2,h3 {
     background-color: inherit;
     font-size: 3rem;
 }
-  
+
+.discription_article {
+  width: 70%;
+  margin: 5rem auto auto;
+}
+.discription_container {
+  display: flex;
+}
+.discription_container li{ 
+  list-style: none;
+  padding-bottom: 1rem;
+}
+.discription_title { width: 40%; }
+.discription { width: 60%; }

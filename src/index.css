@@ -191,6 +191,7 @@ body,div,article,section,h1,h2,h3 {
 }
 .discription_container {
   display: flex;
+  margin-bottom: 4%;
 }
 .discription_container li{ 
   list-style: none;
@@ -198,3 +199,14 @@ body,div,article,section,h1,h2,h3 {
 }
 .discription_title { width: 40%; }
 .discription { width: 60%; }
+.genre_para { margin-right: 1%;}
+
+.starringcontainer {
+  display: inline-grid;
+  width: 30%;
+}
+.starringimgs { 
+  width: 98%;
+  margin-right: 2%;
+}
+.starringnames { font-size: .7rem;}

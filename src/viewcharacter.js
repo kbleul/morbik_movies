@@ -57,7 +57,7 @@ const Viewcharacter = () => {
 
   return (<article className="subcontainer">
     <Search />
-    <p className="subtitle">Pick a movie you have watched.</p>
+    {!showrecommendation && <p className="subtitle">Pick a movie you have watched.</p>}
     <TopImage imgurl={topimgurl} nextbtn={shownextbtn} showrec={showrecommendation}/>
 
    { showrecommendation ? 

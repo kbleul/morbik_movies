@@ -3,24 +3,35 @@ import axios from 'axios'
 
 const TopImage = ({ imgurl, nextbtn, showrec }) => {
   const [recommendation, setrecommendation] = useState(imgurl[1][0]);
-  const [recommendationcounter, set_recommendationcounter] = useState(0);
+  const [recommendationcounter, set_recommendationcounter] = useState(1);
+  const [backbtn , set_backbtn] = useState(false);
+  const [genres , set_genres] = useState([]);
+  const [cast, setcast] = useState([])
   const genremap = new Map();
 
-  useEffect(() => { setrecommendation(imgurl[1][0]);  }, [showrec]);
+  useEffect(() => { setrecommendation(imgurl[1][0]);}, [showrec]);
+
 
   useEffect(() => {
 
-    const fetchGenders = async () => {
-      const response = await axios("https://api.themoviedb.org/3/genre/movie/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
+    const fetchGendersDetails = async () => {
+      const fetchgenre = await axios("https://api.themoviedb.org/3/genre/movie/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
+      fetchgenre.data.genres.map(item => {   genremap.set(item.id , item.name);   });
 
-      response.data.genres.map(item => {
-        genremap.set(item.id , item.name);
-        console.log("genre" + genremap)
-      })
+      let temparr = [];
+      recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
+
+      set_genres(temparr);
+
+      const fetchdetails = await axios(`https://api.themoviedb.org/3/movie/${recommendation.id}/credits?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US`);
+
+      fetchdetails.data.cast.splice(6,fetchdetails.data.cast.length-6);
+        setcast(fetchdetails.data.cast);
+      
     }
-    fetchGenders();
-  }, [])
+    if( recommendation.genre_ids !== undefined) { fetchGendersDetails() }
+  }, [recommendation])
 
 
   let firstsection = {
@@ -57,14 +68,24 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
     backgroundImage: `url(${recommendation})`,
   }
 
-  const showNextRecommendation = () => {
+  const showNextRecommendation = (goback) => {
     let tempnum = recommendationcounter;
+    if(!goback) {
     ++tempnum;
 
     if (recommendationcounter >= imgurl[1].length - 1) { set_recommendationcounter(0); }
     else { set_recommendationcounter(tempnum); }
 
     setrecommendation(imgurl[1][recommendationcounter]);
+    set_backbtn(true);
+    }
+    else {
+      --tempnum;
+    if (recommendationcounter <= 0) { set_recommendationcounter(imgurl[1].length - 1); }
+    else { set_recommendationcounter(tempnum); }
+
+    setrecommendation(imgurl[1][recommendationcounter]);
+    }
   }
 
   return (<>
@@ -72,8 +93,8 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
       <article id="topimage_article">
         <section style={firstsection}></section>
         <section style={recommendation.poster_path === undefined ? secondsection_front : secondsection}></section>
-        {nextbtn && <button onClick={showNextRecommendation} className="nextbtn">→</button>}
-
+        {nextbtn && <button onClick={() => showNextRecommendation(false)} className="nextbtn">→</button>}
+        {backbtn && <button onClick={() => showNextRecommendation(true)} className="nextbtn">←</button>}
       </article>
 
     </div>
@@ -96,11 +117,22 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
           <li className='discription_title'>Average Rating</li>
           <li className='discription'>{recommendation.vote_average}</li>
         </div>
-        <div className='discription_container'> 
+        <div className='discription_container'>
           <li className='discription_title'>Genre</li>
-          {recommendation.map(item => (
-            <p>{genremap.get(item.genre_ids) + " "}</p>
+          {genres.map(item => (
+                <p key={item} className="genre_para">{item }</p>
           ))}
+        </div>
+        <div className='discription_container'>
+          <li className='discription_title'>Starring</li>
+          <li className='discription'>
+          {cast.map(item => (<div className="starringcontainer">
+            <img className="starringimgs" src={`https://image.tmdb.org/t/p/w500${item.profile_path}`} alt={item.name} key={item.profile_path}  />
+            <p className="starringnames" key={item.name}>{item.name}</p>
+            </div>
+          ))}
+          </li>
+          
         </div>
       </ul>
     </article>}

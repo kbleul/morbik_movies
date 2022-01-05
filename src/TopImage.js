@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const TopImage = ({ imgurl, nextbtn, showrec }) => {
-  const [recommendation, setrecommendation] = useState(imgurl[1][0]);
   const [recommendationcounter, set_recommendationcounter] = useState(1);
+  const [recommendation, setrecommendation] = useState(imgurl[1][0]);
   const [backbtn , set_backbtn] = useState(false);
   const [genres , set_genres] = useState([]);
   const [cast, setcast] = useState([])
@@ -73,19 +73,18 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
     if(!goback) {
     ++tempnum;
 
-    if (recommendationcounter >= imgurl[1].length - 1) { set_recommendationcounter(0); }
+    if (tempnum >= imgurl[1].length - 1) { set_recommendationcounter(0); }
     else { set_recommendationcounter(tempnum); }
-
-    setrecommendation(imgurl[1][recommendationcounter]);
     set_backbtn(true);
     }
     else {
       --tempnum;
-    if (recommendationcounter <= 0) { set_recommendationcounter(imgurl[1].length - 1); }
+    if (tempnum <= 0) { set_recommendationcounter(imgurl[1].length - 1); }
     else { set_recommendationcounter(tempnum); }
-
-    setrecommendation(imgurl[1][recommendationcounter]);
     }
+   setrecommendation(imgurl[1][recommendationcounter])
+    console.log(tempnum)
+
   }
 
   return (<>
@@ -126,7 +125,7 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
         <div className='discription_container'>
           <li className='discription_title'>Starring</li>
           <li className='discription'>
-          {cast.map(item => (<div className="starringcontainer">
+          {cast.map(item => (<div key={item.id} className="starringcontainer">
             <img className="starringimgs" src={`https://image.tmdb.org/t/p/w500${item.profile_path}`} alt={item.name} key={item.profile_path}  />
             <p className="starringnames" key={item.name}>{item.name}</p>
             </div>

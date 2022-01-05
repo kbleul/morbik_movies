@@ -42,9 +42,10 @@ const Viewcharacter = () => {
     fetchitems();
   }, []);
 
-  const handleShowRecommendation = async (item) => {
+  const handleShowRecommendation = async (item, istvshow) => {
 
-         try {
+        if(!istvshow) { 
+          try {
            const fetchrecommendations = await axios(`https://api.themoviedb.org/3/movie/${item.id}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
            
            set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`,fetchrecommendations.data.results]);
@@ -52,6 +53,8 @@ const Viewcharacter = () => {
            set_shownextbtn(true);
 
          }  catch  {  console.log("Fetch recommendations error.")  }
+        }
+       
 
   }
 
@@ -71,13 +74,13 @@ const Viewcharacter = () => {
 
           <section className="cardscontainer">
             {boxoffice.map(item => (
-              <section onClick={() => handleShowRecommendation(item)} key={`${item.id}${item.title}`} className="cards">
+              <section onClick={() => handleShowRecommendation(item,false)} key={`${item.id}${item.title}`} className="cards">
                 <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title} 
                 src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
 
-                <div className="ratetitle_container">
+                <div className="ratetitle_container" key={`${item.id}${item.title}`}>
                   <p className="cardstitle" key={item.title}>{item.title}</p>
-                  <p className="cardsrating">{item.vote_average}</p>
+                  <p className="cardsrating" key={item.vote_average}>{item.vote_average}</p>
                 </div>
               </section>
             )
@@ -89,13 +92,13 @@ const Viewcharacter = () => {
       <h3 className="section_title">top rated - all time</h3>
       {!isloading && <section className="cardscontainer">
         {alltime_boxoffice.map(item => (
-          <section key={`${item.id}${item.title}`} className="cards-alltime">
+          <section onClick={() => handleShowRecommendation(item,false)} key={`${item.id}${item.title}`} className="cards-alltime">
             <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.title}
               src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
 
-            <div className="ratetitle_container">
+            <div className="ratetitle_container" key={`${item.id}${item.title}`}>
               <p className="cardstitle" key={item.title}>{item.title}</p>
-              <p className="cardsrating">{item.vote_average} ✯</p>
+              <p className="cardsrating" key={item.vote_average}>{item.vote_average} ✯</p>
             </div>
 
           </section>
@@ -108,13 +111,13 @@ const Viewcharacter = () => {
       <h3 className="section_title">popular tv-shows</h3>
       {!isloading && <section className="cardscontainer">
         {tvshow.map(item => (
-          <section key={`${item.id}${item.name}`} className="cards">
+          <section onClick={() => handleShowRecommendation(item,true)} key={`${item.id}${item.name}`} className="cards">
             <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.name}
               src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
 
-            <div className="ratetitle_container">
+            <div className="ratetitle_container"  key={`${item.id}${item.name}`}>
               <p className="cardstitle" key={item.name}>{item.name}</p>
-              <p className="cardsrating">{item.vote_average}</p>
+              <p className="cardsrating" key={item.vote_average}>{item.vote_average}</p>
             </div>
           </section>
         )

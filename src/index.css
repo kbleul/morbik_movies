@@ -215,7 +215,7 @@ body,div,article,section,h1,h2,h3 {
     color: #c8c8c8;
 }
 .nextbtn:focus,
-.nextbtn:hover { color:black;}
+.nextbtn:hover { color:black; }
 
 .discription_article {
   width: 70%;

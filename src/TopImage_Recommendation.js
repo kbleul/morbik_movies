@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const TopImage = ({ imgurl, nextbtn, showrec }) => {
+const TopImage = ({ imgurl, nextbtn, set_nextbtn , showrec , setshowrec ,istvshow , settopimg}) => {
   const [recommendationcounter, set_recommendationcounter] = useState(1);
   const [recommendation, setrecommendation] = useState(imgurl[1][0]);
   const [backbtn , set_backbtn] = useState(false);
@@ -14,7 +14,34 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
 
   useEffect(() => {
 
+    if(istvshow) {
+        
+    
     const fetchGendersDetails = async () => {
+
+      const fetchgenre = await axios("https://api.themoviedb.org/3/genre/tv/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
+
+      fetchgenre.data.genres.map(item => {   genremap.set(item.id , item.name);   });
+
+      let temparr = [];
+      recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
+
+      set_genres(temparr);
+
+      const fetchdetails = await axios(`https://api.themoviedb.org/3/tv/${recommendation.id}/credits?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US`);
+
+      fetchdetails.data.cast.splice(6,fetchdetails.data.cast.length-6);
+        setcast(fetchdetails.data.cast);
+      
+    }
+    if( recommendation.genre_ids !== undefined) { fetchGendersDetails() }
+  }
+
+    else {
+            
+    
+    const fetchGendersDetails = async () => {
+
       const fetchgenre = await axios("https://api.themoviedb.org/3/genre/movie/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
       fetchgenre.data.genres.map(item => {   genremap.set(item.id , item.name);   });
@@ -31,6 +58,7 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
       
     }
     if( recommendation.genre_ids !== undefined) { fetchGendersDetails() }
+    }
   }, [recommendation])
 
 
@@ -83,11 +111,19 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
     else { set_recommendationcounter(tempnum); }
     }
    setrecommendation(imgurl[1][recommendationcounter])
-    console.log(tempnum)
-
   }
 
+  const backToFrontpage = () => {
+
+    settopimg(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg" , 
+    ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"] ]);  
+
+    setshowrec(false); 
+    set_nextbtn(false);
+
+  }
   return (<>
+    {showrec && <button onClick={ backToFrontpage } className="backtofront_btn" >←</button>  }
     <div id="topimage_div">
       <article id="topimage_article">
         <section style={firstsection}></section>
@@ -102,16 +138,17 @@ const TopImage = ({ imgurl, nextbtn, showrec }) => {
       <ul>
         <div className='discription_container'>
           <li className='discription_title'>Title</li>
-          <li className='discription'>{recommendation.title}</li>
+          <li className='discription'>{istvshow ? recommendation.name : recommendation.title}</li>
         </div>
         <div className='discription_container'>
           <li className='discription_title'>Release Dating</li>
-          <li className='discription'>{recommendation.release_date}</li>
+          <li className='discription'>{istvshow ? recommendation.first_air_date : recommendation.release_date}</li>
         </div>
         <div className='discription_container'>
           <li className='discription_title'>Overview</li>
           <li className='discription'>{recommendation.overview}</li>
         </div>
+       
         <div className='discription_container'>
           <li className='discription_title'>Average Rating</li>
           <li className='discription'>{recommendation.vote_average}</li>

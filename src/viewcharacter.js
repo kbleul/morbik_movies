@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Search from './search'
-import TopImage from './TopImage'
+import TopImage from './TopImage_Recommendation'
 import loading from './imgs/loading.gif'
 
 const Viewcharacter = () => {
@@ -13,6 +13,7 @@ const Viewcharacter = () => {
   const [isloading, set_isloading] = useState(true);
   const [shownextbtn , set_shownextbtn] = useState(false);
   const [showrecommendation, set_showrecommendation] = useState(false);
+  const [suggesttvshow , set_suggesttvshow] = useState(false)
   const [topimgurl , set_topimgurl] = useState(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg" , 
                                                 ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"]])
 
@@ -45,6 +46,7 @@ const Viewcharacter = () => {
   const handleShowRecommendation = async (item, istvshow) => {
 
         if(!istvshow) { 
+                        set_suggesttvshow(false)
           try {
            const fetchrecommendations = await axios(`https://api.themoviedb.org/3/movie/${item.id}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
            
@@ -52,16 +54,26 @@ const Viewcharacter = () => {
            set_showrecommendation(true);
            set_shownextbtn(true);
 
-         }  catch  {  console.log("Fetch recommendations error.")  }
+         }  catch  {  console.log("Fetch movie recommendations error.")  }
         }
-       
+       else {
+        set_suggesttvshow(true)
+        try {
+          const fetchrecommendations = await axios(`https://api.themoviedb.org/3/tv/${item.id}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
+          
+          set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`,fetchrecommendations.data.results]);
+          set_showrecommendation(true);
+          set_shownextbtn(true);
+
+        }  catch  {  console.log("Fetch tvshow recommendations error.")  }
+       }
 
   }
 
   return (<article className="subcontainer">
     <Search />
     {!showrecommendation && <p className="subtitle">Pick a movie you have watched.</p>}
-    <TopImage imgurl={topimgurl} nextbtn={shownextbtn} showrec={showrecommendation}/>
+    <TopImage imgurl={topimgurl} nextbtn={shownextbtn} set_nextbtn={set_shownextbtn} showrec={showrecommendation} setshowrec={set_showrecommendation} istvshow={suggesttvshow} settopimg={set_topimgurl}/>
 
    { showrecommendation ? 
        <section className="reccomendationpage_container">
@@ -131,13 +143,13 @@ const Viewcharacter = () => {
       {!isloading &&
         <section className="cardscontainer">
           {alltime_tvshow.map(item => (
-            <section key={`${item.id}${item.name}`} className="cards-alltime">
+            <section onClick={() => handleShowRecommendation(item,true)} key={`${item.id}${item.name}`} className="cards-alltime">
               <img className="cardsimg" key={`${item.id}${item.vote_average}`} alt={item.name}
                 src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
 
-              <div className="ratetitle_container">
+              <div className="ratetitle_container" key={`${item.id}${item.name}`}>
                 <p className="cardstitle" key={item.name}>{item.name}</p>
-                <p className="cardsrating">{item.vote_average} ✯</p>
+                <p className="cardsrating" key={item.vote_average}>{item.vote_average} ✯</p>
               </div>
 
             </section>

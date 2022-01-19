@@ -9,7 +9,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn , showrec , setshowrec ,istvsho
   const [cast, setcast] = useState([])
   const genremap = new Map();
 
-  useEffect(() => { setrecommendation(imgurl[1][0]);}, [showrec]);
+  useEffect(() => { setrecommendation(imgurl[1][0]);}, [showrec,imgurl]);
 
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn , showrec , setshowrec ,istvsho
 
       const fetchgenre = await axios("https://api.themoviedb.org/3/genre/tv/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
-      fetchgenre.data.genres.map(item => {   genremap.set(item.id , item.name);   });
+      fetchgenre.data.genres.map(item => {   genremap.set(item.id , item.name);  return 0; });
 
       let temparr = [];
       recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })

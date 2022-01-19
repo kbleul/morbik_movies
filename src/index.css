@@ -6,6 +6,7 @@
 body,div,article,section,h1,h2,h3 {
   margin: 0;
   padding: 0;
+  
 }
 #root {
   width: 100%;
@@ -15,7 +16,9 @@ body,div,article,section,h1,h2,h3 {
 }
 .frontright_container {
   width : 30%;
-
+  background-color: rgba(204, 148, 148, 0.6);
+  padding-left: 2%;
+  height: 70vh;
   animation: backInUp; 
   animation-duration: 2s;
 }
@@ -78,6 +81,38 @@ body,div,article,section,h1,h2,h3 {
 }
 
 .formcontainer { position: relative; }
+.form { display: flex; }
+
+.series_moviechoice_container {
+  width: 30%;
+  margin: 0 auto;
+  margin-top: .3%;
+  display: flex;
+  align-items: center;
+}
+
+.searchseries_btn {
+  background-color: inherit;
+  color:  #848484;
+}
+
+.series_moviechoice_container p{
+  font-size: small;
+  margin-left: 57%;
+  text-decoration: underline;
+  text-decoration-color: burlywood;
+}
+.series_moviechoice_container button {
+  font-size: .8rem;
+  border : none;
+  margin-left: 1%;
+}
+.series_moviechoice_container button:hover,
+.series_moviechoice_container button:focus { 
+  color: white;
+  background-color: #316921;
+  font-weight: bold;
+}
 
 .searchinput {
   background-color: inherit;
@@ -100,9 +135,7 @@ body,div,article,section,h1,h2,h3 {
   color:gray;
   overflow-y:scroll;
   position: absolute;
-  z-index: 10;
-
-  
+  z-index: 10;  
 }
 
 .searchsuggestion_container li {
@@ -110,6 +143,15 @@ body,div,article,section,h1,h2,h3 {
   border-bottom: 1px solid #ece9e9;
   padding: 1% 2% 2% 3%;
 }
+.searchsuggestion_container li:hover,
+.searchsuggestion_container li:focus {
+  cursor: pointer;
+}
+.searchbtn {
+  background-color: inherit;
+  border: none;
+}
+.searchbtn_svg { margin-top: 5%;}
 
 .loadingimg { margin-left: 40%; }
 
@@ -127,7 +169,9 @@ body,div,article,section,h1,h2,h3 {
   display: -moz-inline-grid;
 }
 .cards:hover,
-.cardsimg:hover { opacity: .7; }
+.cardsimg:hover,
+.form:hover,
+.form:focus { opacity: .7; }
 
 .cardsrank { 
   color : #fff49e;

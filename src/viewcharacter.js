@@ -71,7 +71,7 @@ const Viewcharacter = () => {
   }
 
   return (<article className="subcontainer">
-    <Search />
+   <Search setimgurl={set_topimgurl} setshowrec={set_showrecommendation} setshownextbtn={set_shownextbtn}/>
     {!showrecommendation && <p className="subtitle">Pick a movie you have watched.</p>}
     <TopImage imgurl={topimgurl} nextbtn={shownextbtn} set_nextbtn={set_shownextbtn} showrec={showrecommendation} setshowrec={set_showrecommendation} istvshow={suggesttvshow} settopimg={set_topimgurl}/>
 

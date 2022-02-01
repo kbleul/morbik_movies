@@ -1,63 +1,63 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const TopImage = ({ imgurl, nextbtn, set_nextbtn , showrec , setshowrec ,istvshow , settopimg}) => {
+const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow, settopimg }) => {
   const [recommendationcounter, set_recommendationcounter] = useState(1);
   const [recommendation, setrecommendation] = useState(imgurl[1][0]);
-  const [backbtn , set_backbtn] = useState(false);
-  const [genres , set_genres] = useState([]);
+  const [backbtn, set_backbtn] = useState(false);
+  const [genres, set_genres] = useState([]);
   const [cast, setcast] = useState([])
   const genremap = new Map();
 
-  useEffect(() => { setrecommendation(imgurl[1][0]);}, [showrec,imgurl]);
+  useEffect(() => { setrecommendation(imgurl[1][0]); }, [showrec, imgurl]);
 
 
   useEffect(() => {
 
-    if(istvshow) {
-        
-    
-    const fetchGendersDetails = async () => {
+    if (istvshow) {
 
-      const fetchgenre = await axios("https://api.themoviedb.org/3/genre/tv/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
-      fetchgenre.data.genres.map(item => {   genremap.set(item.id , item.name);  return 0; });
+      const fetchGendersDetails = async () => {
 
-      let temparr = [];
-      recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
+        const fetchgenre = await axios("https://api.themoviedb.org/3/genre/tv/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
-      set_genres(temparr);
+        fetchgenre.data.genres.map(item => { genremap.set(item.id, item.name); return 0; });
 
-      const fetchdetails = await axios(`https://api.themoviedb.org/3/tv/${recommendation.id}/credits?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US`);
+        let temparr = [];
+        recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
 
-      fetchdetails.data.cast.splice(6,fetchdetails.data.cast.length-6);
+        set_genres(temparr);
+
+        const fetchdetails = await axios(`https://api.themoviedb.org/3/tv/${recommendation.id}/credits?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US`);
+
+        fetchdetails.data.cast.splice(6, fetchdetails.data.cast.length - 6);
         setcast(fetchdetails.data.cast);
-      
+
+      }
+      if (recommendation.genre_ids !== undefined) { fetchGendersDetails() }
     }
-    if( recommendation.genre_ids !== undefined) { fetchGendersDetails() }
-  }
 
     else {
-            
-    
-    const fetchGendersDetails = async () => {
 
-      const fetchgenre = await axios("https://api.themoviedb.org/3/genre/movie/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
-      fetchgenre.data.genres.map(item => {   genremap.set(item.id , item.name);   });
+      const fetchGendersDetails = async () => {
 
-      let temparr = [];
-      recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
+        const fetchgenre = await axios("https://api.themoviedb.org/3/genre/movie/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
-      set_genres(temparr);
+        fetchgenre.data.genres.map(item => { genremap.set(item.id, item.name); });
 
-      const fetchdetails = await axios(`https://api.themoviedb.org/3/movie/${recommendation.id}/credits?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US`);
+        let temparr = [];
+        recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
 
-      fetchdetails.data.cast.splice(6,fetchdetails.data.cast.length-6);
+        set_genres(temparr);
+
+        const fetchdetails = await axios(`https://api.themoviedb.org/3/movie/${recommendation.id}/credits?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US`);
+
+        fetchdetails.data.cast.splice(6, fetchdetails.data.cast.length - 6);
         setcast(fetchdetails.data.cast);
-      
-    }
-    if( recommendation.genre_ids !== undefined) { fetchGendersDetails() }
+
+      }
+      if (recommendation.genre_ids !== undefined) { fetchGendersDetails() }
     }
   }, [recommendation])
 
@@ -98,32 +98,33 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn , showrec , setshowrec ,istvsho
 
   const showNextRecommendation = (goback) => {
     let tempnum = recommendationcounter;
-    if(!goback) {
-    ++tempnum;
+    if (!goback) {
+      ++tempnum;
 
-    if (tempnum >= imgurl[1].length - 1) { set_recommendationcounter(0); }
-    else { set_recommendationcounter(tempnum); }
-    set_backbtn(true);
+      if (tempnum >= imgurl[1].length - 1) { set_recommendationcounter(0); }
+      else { set_recommendationcounter(tempnum); }
+      set_backbtn(true);
     }
     else {
       --tempnum;
-    if (tempnum <= 0) { set_recommendationcounter(imgurl[1].length - 1); }
-    else { set_recommendationcounter(tempnum); }
+      if (tempnum <= 0) { set_recommendationcounter(imgurl[1].length - 1); }
+      else { set_recommendationcounter(tempnum); }
     }
-   setrecommendation(imgurl[1][recommendationcounter])
+    setrecommendation(imgurl[1][recommendationcounter])
   }
 
   const backToFrontpage = () => {
 
-    settopimg(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg" , 
-    ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"] ]);  
+    settopimg(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
+      ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"]]);
 
-    setshowrec(false); 
+    setshowrec(false);
     set_nextbtn(false);
 
   }
+  
   return (<>
-    {showrec && <button onClick={ backToFrontpage } className="backtofront_btn" >←</button>  }
+    {showrec && <button onClick={backToFrontpage} className="backtofront_btn" >←</button>}
     <div id="topimage_div">
       <article id="topimage_article">
         <section style={firstsection}></section>
@@ -148,7 +149,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn , showrec , setshowrec ,istvsho
           <li className='discription_title'>Overview</li>
           <li className='discription'>{recommendation.overview}</li>
         </div>
-       
+
         <div className='discription_container'>
           <li className='discription_title'>Average Rating</li>
           <li className='discription'>{recommendation.vote_average}</li>
@@ -156,19 +157,19 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn , showrec , setshowrec ,istvsho
         <div className='discription_container'>
           <li className='discription_title'>Genre</li>
           {genres.map(item => (
-                <p key={item} className="genre_para">{item }</p>
+            <p key={item} className="genre_para">{item}</p>
           ))}
         </div>
         <div className='discription_container'>
           <li className='discription_title'>Starring</li>
           <li className='discription'>
-          {cast.map(item => (<div key={item.id} className="starringcontainer">
-            <img className="starringimgs" src={`https://image.tmdb.org/t/p/w500${item.profile_path}`} alt={item.name} key={item.profile_path}  />
-            <p className="starringnames" key={item.name}>{item.name}</p>
+            {cast.map(item => (<div key={item.id} className="starringcontainer">
+              <img className="starringimgs" src={`https://image.tmdb.org/t/p/w500${item.profile_path}`} alt={item.name} key={item.profile_path} />
+              <p className="starringnames" key={item.name}>{item.name}</p>
             </div>
-          ))}
+            ))}
           </li>
-          
+
         </div>
       </ul>
     </article>}

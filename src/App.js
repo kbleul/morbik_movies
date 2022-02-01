@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react'
 import Viewcharacter from './viewcharacter'
+import Header from './header';
 
 
 const App = () => {
@@ -8,8 +9,12 @@ const App = () => {
 
   return (<>
     <article id={`${enter ? "main_container_change" : "main_container"}`}>
-      {enter ? <Viewcharacter />
-        : <>
+    
+      {enter ? (<article>
+        <Header />
+        <Viewcharacter />
+        </article>
+        )  : <>
           <section className="frontleft_container">
             <p className="leftpara ">Movies ,Series , Subreddits . . .</p>
           </section>

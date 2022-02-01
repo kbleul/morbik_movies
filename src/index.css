@@ -2,14 +2,48 @@
 
 *,::after,::before {
   box-sizing: border-box;
-}
-body,div,article,section,h1,h2,h3 {
   margin: 0;
   padding: 0;
-  
 }
+
 #root {
   width: 100%;
+}
+
+header {
+  background-color: #ffffff;
+  color: white;
+  font-family: cursive;
+  font-weight: 900;
+  border-bottom: 1.5px solid black;
+  box-shadow: 0px 6px 9px  rgba(0,0,0,.6);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 4rem;
+  z-index: 5;
+  display: flex;
+}
+header img {
+  width: 25%;
+  height : auto;
+  margin-top: .3rem;
+  margin-left: 5%;
+}
+.subreddit_btn {
+  align-self: center;
+  padding: 0.5rem 1rem;
+  margin-left: 50%;
+  background-color: inherit;
+  border-radius: 50rem;
+  font-family: cursive;
+  font-weight: bolder;
+  font-size: 1.2rem;
+}
+.subreddit_btn:hover,
+.subreddit_btn:focus { 
+  background-color: black;
+  color: white;
 }
 .frontleft_container {
   width : 30%;
@@ -65,14 +99,12 @@ body,div,article,section,h1,h2,h3 {
   background-size: cover;
 }
 #main_container_change {
-  display: flex;
-  justify-content: center;
-  height : 100vh;
+ background-color: inherit;
 }
 
 .subcontainer {
   width : 100%;
-  margin-top: 3%;
+  margin-top: 6rem;
 }
 
 .enterbtn:hover,

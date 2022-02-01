@@ -2,19 +2,24 @@
 import React, { useState } from 'react'
 import Viewcharacter from './viewcharacter'
 import Header from './header';
+import Redditpage from './redditpage'
 
 
 const App = () => {
   const [enter, setenter] = useState(false);
+  const [showreddit_page, set_showreddit_page] = useState(false);
 
   return (<>
     <article id={`${enter ? "main_container_change" : "main_container"}`}>
     
       {enter ? (<article>
-        <Header />
-        <Viewcharacter />
+        <Header setshowreddit={set_showreddit_page} />
+
+         { showreddit_page ? <Redditpage />  :  <Viewcharacter />  }
+
         </article>
-        )  : <>
+        ) 
+         : <>
           <section className="frontleft_container">
             <p className="leftpara ">Movies ,Series , Subreddits . . .</p>
           </section>

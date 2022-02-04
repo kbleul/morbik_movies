@@ -339,8 +339,7 @@ header img {
   font-size: 2rem;
   padding-top: 1rem;
 }
-.redditsection:hover,
-.subreddit_section:hover {
+.redditsection:hover {
   background: -moz-linear-gradient(45deg ,black,indigo);
   color: white;
 
@@ -357,6 +356,10 @@ header img {
 
 .subreddit_section {
   padding: 1rem 1%;
+}
+.subreddit_section:hover {
+  box-shadow: 0px 3px 6px 7px rgba(0,0,0,.6);
+
 }
 
 .subreddit_subcontainer h2,

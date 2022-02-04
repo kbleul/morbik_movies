@@ -356,9 +356,10 @@ header img {
 
 .subreddit_section {
   padding: 1rem 1%;
+  border-bottom: 1px solid lightgray;
 }
 .subreddit_section:hover {
-  box-shadow: 0px 3px 6px 7px rgba(0,0,0,.6);
+  box-shadow: 0px 1px 3px 7px rgba(0,0,0,.6);
 
 }
 
@@ -367,7 +368,64 @@ header img {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 3rem;
-  color: #958c8c
+  color: #958c8c;
 }
 .subreddit_subcontainer h2:before,
 .reddit_subcontainer h2:before { content: "r/";  }
+
+a { 
+  color: inherit; 
+  text-decoration: none;
+}
+a:visited { border-top: 1px solid green; }
+
+.upvotecontainer {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ align-self: flex-start;
+}
+.subredditpost_left {
+  width: 80%;
+  margin-right: 3%;
+}
+.subredditpost_left h4{
+  font-family: 'Vujahday Script', cursive;
+  font-size: 2rem;
+}
+.subredditpost_left h4,
+.subredditpost_left p,
+.subredditpost_left button{
+  padding-bottom: .5rem;
+}
+.subredditpost {
+  display: flex;
+}
+.upvotepara {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.subredditpost_bottom {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 60%;
+  margin-left: 37%;
+  margin-top: 1rem;
+}
+.subredditpost_bottom p{
+  color: gray;
+  width: 70%;
+}
+.subredditpost_bottom button{
+    border: none;
+    background-color: #4cb74c;
+    color: white;
+    font-weight: bolder;
+    width: 30%;
+
+}
+.subredditpost_bottom button {
+  padding: .5rem 1rem;
+}

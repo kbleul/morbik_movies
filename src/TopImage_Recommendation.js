@@ -97,6 +97,8 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
   }
 
   const showNextRecommendation = (goback) => {
+
+
     let tempnum = recommendationcounter;
     if (!goback) {
       ++tempnum;
@@ -111,6 +113,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
       else { set_recommendationcounter(tempnum); }
     }
     setrecommendation(imgurl[1][recommendationcounter])
+
   }
 
   const backToFrontpage = () => {
@@ -124,12 +127,12 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
   }
   
   return (<>
-    {showrec && <button onClick={backToFrontpage} className="backtofront_btn" >←</button>}
+    {showrec && <button onClick={ backToFrontpage } className="backtofront_btn" >←</button>}
     <div id="topimage_div">
       <article id="topimage_article">
         <section style={firstsection}></section>
         <section style={recommendation.poster_path === undefined ? secondsection_front : secondsection}></section>
-        {nextbtn && <button onClick={() => showNextRecommendation(false)} className="nextbtn">→</button>}
+        {nextbtn && <button onClick={() => recommendation.id !== "Error" } className="nextbtn">→</button>}
         {backbtn && <button onClick={() => showNextRecommendation(true)} className="nextbtn">←</button>}
       </article>
 

@@ -49,7 +49,14 @@ const Viewcharacter = () => {
       try {
         const fetchrecommendations = await axios(`https://api.themoviedb.org/3/movie/${item.id}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
 
+            if(fetchrecommendations.data.results.length > 0){
         set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`, fetchrecommendations.data.results]);
+        }
+        else {  
+          let tempobj = {title : "Recommendation not found. Pick a different movie please !"}
+          set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`, [tempobj] ])
+        }
+
         set_showrecommendation(true);
         set_shownextbtn(true);
 
@@ -60,9 +67,16 @@ const Viewcharacter = () => {
       try {
         const fetchrecommendations = await axios(`https://api.themoviedb.org/3/tv/${item.id}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
 
+        if(fetchrecommendations.data.results.length > 0){
+
         set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`, fetchrecommendations.data.results]);
         set_showrecommendation(true);
         set_shownextbtn(true);
+        }  else {  
+          let tempobj = {name : "Recommendation not found. Pick a different series please !" , id : "Error"}
+          set_topimgurl([`https://image.tmdb.org/t/p/w500/${item.poster_path}`, [tempobj] ])
+        }
+
 
       } catch { console.log("Fetch tvshow recommendations error.") }
     }
@@ -70,7 +84,7 @@ const Viewcharacter = () => {
   }
 
   return (<article className="subcontainer">
-    <Search setimgurl={set_topimgurl} setshowrec={set_showrecommendation} setshownextbtn={set_shownextbtn} />
+    <Search setimgurl={set_topimgurl} setshowrec={set_showrecommendation} setshownextbtn={set_shownextbtn} setistv = {set_suggesttvshow}/>
     {!showrecommendation && <p className="subtitle">Pick a movie you have watched.</p>}
     <TopImage imgurl={topimgurl} nextbtn={shownextbtn} set_nextbtn={set_shownextbtn} showrec={showrecommendation} setshowrec={set_showrecommendation} istvshow={suggesttvshow} settopimg={set_topimgurl} />
 
@@ -138,7 +152,7 @@ const Viewcharacter = () => {
         }
 
 
-        <h3 className="section_title">top rated - all time</h3>
+        <h3 className="section_title">top rated series - all time</h3>
         {!isloading &&
           <section className="cardscontainer">
             {alltime_tvshow.map(item => (

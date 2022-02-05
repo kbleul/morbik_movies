@@ -2,10 +2,11 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const Search = ({ setimgurl, setshowrec, setshownextbtn }) => {
+const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
     const [input, setinput] = useState("");
     const [searchtvshow, set_searchtvshow] = useState(false);
     const [searchsuggestions, set_searchseggestions] = useState([]);
+
     const [showsuggestionbox, set_showsuggestionbox] = useState(false);
     const idtitle_map = new Map();
 
@@ -13,44 +14,57 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn }) => {
 
 
     useEffect(() => {
+        
+        if(input !== ""){
         if (!searchtvshow) {
             const fetchquery = async () => {
+
+                try {
                 const response = await axios(`https://api.themoviedb.org/3/search/movie?api_key=6d9ca31c5cabba09160dddad1b991df7&query=${input}`);
 
                 set_searchseggestions(response.data.results)
 
                 searchsuggestions.map(item => { mapstate.set(item.title, item.id) })
+            set_showsuggestionbox(true);
 
+                } catch(error) { console.log("Fetch movie search recommendation failed") }
             }
             fetchquery();
 
-            input === "" ? set_showsuggestionbox(false) : set_showsuggestionbox(true);
         }
         else {
             const fetchquery = async () => {
+                try {
+
                 const response = await axios(`https://api.themoviedb.org/3/search/tv?api_key=6d9ca31c5cabba09160dddad1b991df7&query=${input}`);
                 set_searchseggestions(response.data.results)
+  
+                searchsuggestions.map(item => { mapstate.set(item.name, item.id) })
+            set_showsuggestionbox(true);
+       
+
+                } catch(error) { console.log("Fetch series search recommendation failed") }
+
             }
             fetchquery();
-
-            input === "" ? set_showsuggestionbox(false) : set_showsuggestionbox(true);
-        }
+        }}
     }, [input, searchtvshow]);
 
     const handleSearch = event => {
         event.preventDefault();
         set_showsuggestionbox(false)
 
+        if(!searchtvshow){
+
         const fetchquery = async () => {
             let results;
             try {
                 results = await axios(`https://api.themoviedb.org/3/movie/${mapstate.get(input)}?api_key=6d9ca31c5cabba09160dddad1b991df7`);
-                console.log(mapstate.get(input))
-            } catch { console.log("Fetch search movie") }
+   
+            } catch { console.log("Fetch search movies results failed") }
 
             try {
                 const fetchrecommendations = await axios(`https://api.themoviedb.org/3/movie/${mapstate.get(input)}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
-                console.log(fetchrecommendations.data.results)
 
                 if (fetchrecommendations.data.results.length === 0) {
                     setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, `https://image.tmdb.org/t/p/w500${results.data.poster_path}`])
@@ -58,11 +72,41 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn }) => {
                 else {
                     setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, fetchrecommendations.data.results])
                 }
+                      setistv(false)
             } catch { console.log("Fetch movies recommendations from search error.") }
         }
         fetchquery();
         setshowrec(true);
         setshownextbtn(true);
+        }
+        else {
+
+
+            const fetchquery = async () => {
+                let results;
+                try {
+                    results = await axios(`https://api.themoviedb.org/3/tv/${mapstate.get(input)}?api_key=6d9ca31c5cabba09160dddad1b991df7`);
+
+                } catch { console.log("Fetch search series results failed") }
+    
+                try {
+                    const fetchrecommendations = await axios(`https://api.themoviedb.org/3/tv/${mapstate.get(input)}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
+    
+                    if (fetchrecommendations.data.results.length === 0) {
+                        setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, `https://image.tmdb.org/t/p/w500${results.data.poster_path}`])
+                    }
+                    else {
+                        setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, fetchrecommendations.data.results])
+                    }
+
+                   setistv(true);
+
+                } catch { console.log("Fetch series recommendations from search error.") }
+            }
+            fetchquery();
+            setshowrec(true);
+            setshownextbtn(true);
+        }
 
     }
 
@@ -95,11 +139,21 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn }) => {
 
             {
                 showsuggestionbox && <div className='searchsuggestion_container'>
+                {searchtvshow ? 
+                    <div>
                     {searchsuggestions.map(item => (
-                        <li onClick={() => handleSeggestionClick(item.title)} >{item.title}</li>
+                        <li key={`${item.name}${item.id}`} onClick={() => handleSeggestionClick(item.name)} >{item.name}</li>
                     ))}
+                    </div> :
+                   <div>
+                    {searchsuggestions.map(item => (
+                        <li key={`${item.title}${item.id}`} onClick={() => handleSeggestionClick(item.title)} >{item.title}</li>
+                    ))}
+                    </div>
+                }
                 </div>
             }
+           
         </section>
     )
 }

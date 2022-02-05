@@ -15,7 +15,7 @@ const App = () => {
       {enter ? (<article>
         <Header setshowreddit={set_showreddit_page} />
 
-         { showreddit_page ? <Redditpage />  :  <Viewcharacter />  }
+         { showreddit_page ? <Redditpage setshowreddit={set_showreddit_page} />  :  <Viewcharacter />  }
 
         </article>
         ) 

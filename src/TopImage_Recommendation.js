@@ -11,7 +11,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
 
   useEffect(() => { setrecommendation(imgurl[1][0]); }, [showrec, imgurl]);
 
-
+  console.log(recommendation.title )
   useEffect(() => {
 
     if (istvshow) {

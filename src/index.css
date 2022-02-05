@@ -242,11 +242,15 @@ header img {
 }
 
 /*--------------Top image -----------------------*/
-.backtofront_btn {
+.backtofront_btn,
+.backtofront_btn_second {
   background-color: inherit;
   font-size: 1.8rem;
   border: none;
   margin-left: 1%;
+}
+.backtofront_btn_second {
+    margin-top: 7rem;
 }
 #topimage_div {
   height: 80%;

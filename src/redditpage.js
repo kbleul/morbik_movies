@@ -4,7 +4,7 @@ import axios from 'axios';
 import loading from './imgs/loading.gif'
 
 
-const RedditPage = () => {
+const RedditPage = ({setshowreddit}) => {
 
     const [reddit, setreddit] = useState([])
     const [subreddit, set_subreddit] = useState([])
@@ -46,7 +46,9 @@ const RedditPage = () => {
 
 
 
-    return (<article>{show_subreddit ? <SubredditPage subreddit_list={subreddit} showsubreddit={set_show_subreddit} /> :
+    return (<article>
+        <button onClick={() => setshowreddit(false)} className="backtofront_btn_second" >←</button>
+        {show_subreddit ? <SubredditPage subreddit_list={subreddit} showsubreddit={set_show_subreddit} /> :
         <article className='reddit_subcontainer'>
             {reddit.length === 0 ? <img src={loading} alt="loading" className="loadingimg" /> :
 

@@ -127,12 +127,12 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
   }
   
   return (<>
-    {showrec && <button onClick={ backToFrontpage } className="backtofront_btn" >←</button>}
+    {showrec && <button onClick={ backToFrontpage } className="backtofront_btn_third" >←</button>}
     <div id="topimage_div">
       <article id="topimage_article">
         <section style={firstsection}></section>
         <section style={recommendation.poster_path === undefined ? secondsection_front : secondsection}></section>
-        {nextbtn && <button onClick={() => recommendation.id !== "Error" } className="nextbtn">→</button>}
+        {nextbtn && <button onClick={() => showNextRecommendation()  } className="nextbtn">→</button>}
         {backbtn && <button onClick={() => showNextRecommendation(true)} className="nextbtn">←</button>}
       </article>
 
@@ -142,7 +142,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
       <ul>
         <div className='discription_container'>
           <li className='discription_title'>Title</li>
-          <li className='discription'>{istvshow ? recommendation.name : recommendation.title}</li>
+          <li className='discription movie_title'>{istvshow ? recommendation.name : recommendation.title}</li>
         </div>
         <div className='discription_container'>
           <li className='discription_title'>Release Dating</li>

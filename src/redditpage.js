@@ -112,7 +112,7 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
         <button onClick={() => showsubreddit(false)} className="backtofront_btn" >←</button>
 
 
-        <h2 key={subreddit_list[0].data.subreddit}>{subreddit_list[0].data.subreddit}</h2>
+        <h2 className="subredditmain_title" key={subreddit_list[0].data.subreddit}>{subreddit_list[0].data.subreddit}</h2>
         {
             subreddit_list.map(item => (
                 <section className="subreddit_section" key={item.data.id}>
@@ -125,7 +125,7 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
         <p  key={`${item.data.ups} ${subreddit_list[0].data.permalink}`} className="upvotepara">{item.data.ups}</p>
 
         <p className="upvotepara_arrow" key={`${subreddit_list[0].data.permalink} ${subreddit_list[0].data.ups} ${subreddit_list[0].data.permalink}`}>
-        <svg xmlns="http://www.w3.org/2000/svg"  width="3em" height="5rem" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/></g></svg></p> 
+        <svg className="upvotesvg" xmlns="http://www.w3.org/2000/svg"  width="3em" height="5rem" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/></g></svg></p> 
                 </div>
 
                 <div className="subredditpost_left" key={`${item.data.title} ${item.data.author}`}>
@@ -136,7 +136,7 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
                         
                     <section key={subredditcontent_map[item.data.id].subreddit_id}>
 
-                         <p key={subredditcontent_map[item.data.id].selftext}>{subredditcontent_map[item.data.id].selftext}</p>
+                         <p className="subreddit_selftext" key={subredditcontent_map[item.data.id].selftext}>{subredditcontent_map[item.data.id].selftext}</p>
                
 
                          <div className="subredditpost_bottom" key={`${subredditcontent_map[item.data.id].subreddit_id}${subredditcontent_map[item.data.id].subreddit_id}${item.data.author}`}>

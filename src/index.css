@@ -188,7 +188,11 @@ header img {
 }
 .searchbtn_svg { margin-top: 5%;}
 
-.loadingimg { margin-left: 40%; }
+.loadingimg { 
+    margin-left: 30%;
+    width: 40%;
+    margin-top: 30%;
+ }
 
 .section_title { 
   text-transform: uppercase;
@@ -244,14 +248,19 @@ header img {
 
 /*--------------Top image -----------------------*/
 .backtofront_btn,
-.backtofront_btn_second {
+.backtofront_btn_second,
+.backtofront_btn_third {
   background-color: inherit;
   font-size: 1.8rem;
   border: none;
   margin-left: 1%;
+  margin-top: 5rem;
+}
+.backtofront_btn_third {
+  margin-top: 0rem;
 }
 .backtofront_btn_second {
-    margin-top: 7rem;
+    margin-top: 5rem;
 }
 #topimage_div {
   height: 80%;
@@ -326,10 +335,7 @@ header img {
 }
 .starringnames { font-size: .7rem;}
 /*---------------------------------------------------*/
-.reddit_subcontainer {
-
-  margin-top: 6rem;
-}
+.reddit_subcontainer {  margin-top: 1rem; }
 .redditsection {
   width: 21%;
   display: inline-grid;
@@ -368,14 +374,12 @@ header img {
 
 }
 
-.subreddit_subcontainer h2,
 .reddit_subcontainer h2 {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 3rem;
   color: #958c8c;
 }
-.subreddit_subcontainer h2:before,
 .reddit_subcontainer h2:before { content: "r/";  }
 
 a { 
@@ -448,6 +452,7 @@ a:visited { border-top: 1px solid green; }
   .frontright_container { 
     height: 40vh;
     width: 40%; 
+    margin-top: 5%;
   }
   .frontpara { font-size: 1rem; }
 
@@ -465,6 +470,9 @@ a:visited { border-top: 1px solid green; }
     border-bottom: 1px solid #000;
     border-radius: 1px;
   }
+  .subreddit_btn:hover {
+    border-radius: 50px;
+  }
 
   .searchinput {
     width: 80%;
@@ -475,8 +483,10 @@ a:visited { border-top: 1px solid green; }
     width: auto;
     margin-left: 2%;
    }
-  .series_moviechoice_container p {     margin-left: 55%;  }
+  .series_moviechoice_container p {     margin-left: 40%;  }
   .searchseries_btn { margin-left: 3%; }
+
+  .subtitle { margin-top: 1.5rem; }
 
   .topimage_article {   width: 100%;  }
   
@@ -493,4 +503,64 @@ a:visited { border-top: 1px solid green; }
   .cards img,
   .cards-alltime img { width: 100%; }
 
+  .discription_article { 
+    width: 96%;
+    margin: 2rem auto auto;
+  }
+  .discription_title {
+    width: 30%;
+    font-size: .8rem;
+  }
+  .discription {
+    width: 70%;
+    font-size: .8rem;
+    line-height: 1.2rem;
+    margin-left: 3%;
+  }
+
+  .movie_title { 
+    margin-left: 20%;
+    text-align: center; 
+    font-weight: 900;
+  }
+
+  .genre_para { font-size: .8rem; }
+  .starringcontainer { width: 33%; }
+
+  .redditsection {
+      width: 46%;
+      height: 30vh;
+      margin: 0 2% 2% 2%;
+      font-size: 1rem;
+    }
+  .subscribers_para { font-size: 1rem; }
+
+  .upvotepara { font-size: 2.5rem; }
+  .upvotesvg { 
+    width: 2em;
+    height: 4rem;
+  }
+
+  .reddit_subcontainer h2 {  font-size: 1.5rem; }
+  .subredditpost_left {
+    margin-right: 2%;
+    margin-left: 5%;
+  }
+  .subredditpost_left h4 { font-size: 1.1rem; }
+  .subreddit_selftext { font-size: .8rem; }
+  .subredditpost_bottom {
+    width: 100%;
+    margin: 0;
+    font-size: .7rem;
+  }
+
+  .subredditpost_bottom p{ margin-top: .7rem }
+  .subredditpost_bottom button {
+    padding: .2rem .4rem;
+    font-size: .5rem;
+    width: 30%;
+  }
+
 }
+
+  

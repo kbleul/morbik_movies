@@ -67,11 +67,10 @@ header img {
 }
 .leftpara {
   margin-top: 51%;
-  font-family: 'Vujahday Script', cursive;
   font-size: 1.4rem;
   padding-left: 5%;
   font-weight: 900;
-
+  font-family: 'Bebas Neue', cursive;
   animation: lightSpeedInLeft; 
   animation-duration: 10s;
 }
@@ -106,7 +105,7 @@ header img {
 
 .subcontainer {
   width : 100%;
-  margin-top: 6rem;
+  margin-top: 4.5rem;
 }
 
 .enterbtn:hover,
@@ -121,6 +120,7 @@ header img {
   width: 30%;
   margin: 0 auto;
   margin-top: .3%;
+  margin-bottom: 5%;
   display: flex;
   align-items: center;
 }
@@ -178,7 +178,8 @@ header img {
   padding: 1% 2% 2% 3%;
 }
 .searchsuggestion_container li:hover,
-.searchsuggestion_container li:focus {
+.searchsuggestion_container li:focus,
+.searchbtn:hover {
   cursor: pointer;
 }
 .searchbtn {
@@ -258,7 +259,7 @@ header img {
 }
 #topimage_article { 
   width: 100%; 
-  height: 100vh;
+  height: 75vh;
   margin-top: 3%;
 }
 	#firstsection {
@@ -432,4 +433,64 @@ a:visited { border-top: 1px solid green; }
 }
 .subredditpost_bottom button {
   padding: .5rem 1rem;
+}
+
+
+/*------------------Mobile Vesrion------------------------------*/
+
+@media screen and (max-width: 650px)  {
+  .frontleft_container { width: 40%; }
+  .leftpara  { 
+    margin-top: 23vh;
+    font-size: .8rem;
+  }
+  .frontcenter_container { width: 30%; }
+  .frontright_container { 
+    height: 40vh;
+    width: 40%; 
+  }
+  .frontpara { font-size: 1rem; }
+
+  header img {
+    width: 60%;
+    margin-top: .3rem;
+    margin-left: 0;
+  }
+  .subreddit_btn {
+    padding: .3rem;
+    margin-left: 18%;
+    font-size: .9rem;
+    width: 20%;
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 1px;
+  }
+
+  .searchinput {
+    width: 80%;
+    margin-left: 8%;
+  }
+
+  .series_moviechoice_container {
+    width: auto;
+    margin-left: 2%;
+   }
+  .series_moviechoice_container p {     margin-left: 55%;  }
+  .searchseries_btn { margin-left: 3%; }
+
+  .topimage_article {   width: 100%;  }
+  
+  .section_title { font-size: 1.7rem; }
+  .cards { 
+    width: 32%;
+    margin-left: 1%;
+    margin-top: 5%;
+  }
+  .cards-alltime {
+    width: 49%;
+    margin-right: 0;
+  }
+  .cards img,
+  .cards-alltime img { width: 100%; }
+
 }

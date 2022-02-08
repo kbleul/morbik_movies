@@ -47,7 +47,7 @@ const RedditPage = ({setshowreddit}) => {
 
 
     return (<article>
-        <button onClick={() => setshowreddit(false)} className="backtofront_btn_second" >←</button>
+       {!show_subreddit && <button onClick={() => setshowreddit(false)} className="backtofront_btn_second" >←</button>}
         {show_subreddit ? <SubredditPage subreddit_list={subreddit} showsubreddit={set_show_subreddit} /> :
         <article className='reddit_subcontainer'>
             {reddit.length === 0 ? <img src={loading} alt="loading" className="loadingimg" /> :

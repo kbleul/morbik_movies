@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useMediaQuery } from 'react-responsive';
+
 
 const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow, settopimg }) => {
   const [recommendationcounter, set_recommendationcounter] = useState(1);
@@ -9,9 +11,19 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
   const [cast, setcast] = useState([])
   const genremap = new Map();
 
+  const isMobileDevice = useMediaQuery({
+    query: "(max-device-width: 650px)",
+  });
+
+  const isLargeScreenDevice = useMediaQuery({
+    query: "(min-device-width: 651px )",
+  })
+
   useEffect(() => { setrecommendation(imgurl[1][0]); }, [showrec, imgurl]);
 
-  console.log(recommendation.title )
+  console.log(recommendation.title  )
+  console.log(recommendation.name )
+
   useEffect(() => {
 
     if (istvshow) {
@@ -59,7 +71,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
       }
       if (recommendation.genre_ids !== undefined) { fetchGendersDetails() }
     }
-  }, [recommendation])
+  }, [recommendation,istvshow])
 
 
   let firstsection = {
@@ -71,6 +83,16 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     margin: "0 auto",
     opacity: '.75',
   }
+  let firstsection_mobile = {
+    backgroundImage: `url(https://image.tmdb.org/t/p/w500${imgurl[0]})`,
+    backgroundColor: 'gray',
+    padding: '0',
+    margin: "0 auto",
+    opacity: '.75',
+    width: `100%`,
+    height: '60vh',
+  }
+
   let secondsection = {
     position: "absolute",
     top: "0",
@@ -83,6 +105,19 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     width: "80%",
     backgroundImage: `url(https://image.tmdb.org/t/p/w500${recommendation.poster_path})`,
   }
+  let secondsection_mobile = {
+    position: "absolute",
+    top: "0",
+    left: "0",
+    backgroundColor: "rgb(95, 58, 58)",
+    clipPath: "polygon(70% 0, 100% 0,100% 100%,30% 100%)",
+    height: "60vh",
+    margin: "0 auto",
+    padding: "0",
+    width: "100%",
+    backgroundImage: `url(https://image.tmdb.org/t/p/w500${recommendation.poster_path})`,
+  }
+
   let secondsection_front = {
     position: "absolute",
     top: "0",
@@ -93,6 +128,18 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     margin: "0 auto",
     padding: "0",
     width: "80%",
+    backgroundImage: `url(${recommendation})`,
+  }
+  let secondsection_front_mobile = {
+    position: "absolute",
+    top: "0",
+    left: "0",
+    backgroundColor: "rgb(95, 58, 58)",
+    clipPath: "polygon(70% 0, 100% 0,100% 100%,30% 100%)",
+    height: "60vh",
+    margin: "0 auto",
+    padding: "0",
+    width: "100%",
     backgroundImage: `url(${recommendation})`,
   }
 
@@ -130,9 +177,14 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     {showrec && <button onClick={ backToFrontpage } className="backtofront_btn_third" >←</button>}
     <div id="topimage_div">
       <article id="topimage_article">
-        <section style={firstsection}></section>
-        <section style={recommendation.poster_path === undefined ? secondsection_front : secondsection}></section>
-        {nextbtn && <button onClick={() => showNextRecommendation()  } className="nextbtn">→</button>}
+
+       {isLargeScreenDevice && <section  style={firstsection}></section>}
+       {isMobileDevice && <section style={firstsection_mobile}></section>}
+
+       {isLargeScreenDevice && <section id="topimg_second" style={recommendation.poster_path === undefined ? secondsection_front : secondsection}></section>}
+       {isMobileDevice && <section id="topimg_second" style={recommendation.poster_path === undefined ? secondsection_front_mobile : secondsection_mobile}></section>}
+       
+        {imgurl[1].length > 1 && <>{nextbtn && <button onClick={() => showNextRecommendation()  } className="nextbtn">→</button>} </>}
         {backbtn && <button onClick={() => showNextRecommendation(true)} className="nextbtn">←</button>}
       </article>
 
@@ -142,7 +194,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
       <ul>
         <div className='discription_container'>
           <li className='discription_title'>Title</li>
-          <li className='discription movie_title'>{istvshow ? recommendation.name : recommendation.title}</li>
+          <li className='discription movie_title'>{recommendation.name !== undefined ? recommendation.name : recommendation.title}</li>
         </div>
         <div className='discription_container'>
           <li className='discription_title'>Release Dating</li>

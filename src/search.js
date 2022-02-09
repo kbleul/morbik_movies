@@ -10,7 +10,7 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
     const [showsuggestionbox, set_showsuggestionbox] = useState(false);
     const idtitle_map = new Map();
 
-    const [mapstate, set_mapstate] = useState(idtitle_map);
+    const [mapstate] = useState(idtitle_map);
 
 
     useEffect(() => {
@@ -58,22 +58,30 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
 
         const fetchquery = async () => {
             let results;
+            let errormsg = "";
             try {
                 results = await axios(`https://api.themoviedb.org/3/movie/${mapstate.get(input)}?api_key=6d9ca31c5cabba09160dddad1b991df7`);
+                console.log(results.data.Status)
    
-            } catch { console.log("Fetch search movies results failed") }
+            } catch(error) {errormsg = error;  console.log("Fetch search movies results failed\n-----------"+ error + "------------") }
 
+        if(errormsg === "")  {   
             try {
-                const fetchrecommendations = await axios(`https://api.themoviedb.org/3/movie/${mapstate.get(input)}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
+                    const fetchrecommendations = await axios(`https://api.themoviedb.org/3/movie/${mapstate.get(input)}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
 
-                if (fetchrecommendations.data.results.length === 0) {
-                    setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, `https://image.tmdb.org/t/p/w500${results.data.poster_path}`])
-                }
-                else {
-                    setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, fetchrecommendations.data.results])
-                }
-                      setistv(false)
-            } catch { console.log("Fetch movies recommendations from search error.") }
+                    if (fetchrecommendations.data.results.length === 0) {
+                        setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, `https://image.tmdb.org/t/p/w500${results.data.poster_path}`])
+                    }
+                    else {
+                        setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, fetchrecommendations.data.results])
+                    }
+                        setistv(false);
+                } catch(error) {    console.log("Fetch movies recommendations from search error.\n-----------"+ error + "------------") }
+            } else {
+                let tempobj = {title : "Recommendation not found. Pick a different movie please !"}
+                setimgurl([``, [tempobj] ])
+                errormsg = "";
+            }
         }
         fetchquery();
         setshowrec(true);
@@ -84,24 +92,32 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
 
             const fetchquery = async () => {
                 let results;
+                let errormsg = "";
+
                 try {
                     results = await axios(`https://api.themoviedb.org/3/tv/${mapstate.get(input)}?api_key=6d9ca31c5cabba09160dddad1b991df7`);
 
-                } catch { console.log("Fetch search series results failed") }
+                } catch(error) {errormsg = error; console.log("Fetch search series results failed\n-----------"+ error + "------------") }
     
-                try {
-                    const fetchrecommendations = await axios(`https://api.themoviedb.org/3/tv/${mapstate.get(input)}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
-    
-                    if (fetchrecommendations.data.results.length === 0) {
-                        setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, `https://image.tmdb.org/t/p/w500${results.data.poster_path}`])
-                    }
-                    else {
-                        setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, fetchrecommendations.data.results])
-                    }
+                if(errormsg === ""){ 
+                     try {
+                        const fetchrecommendations = await axios(`https://api.themoviedb.org/3/tv/${mapstate.get(input)}/recommendations?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US&page=1`);
+        
+                        if (fetchrecommendations.data.results.length === 0) {
+                            setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, `https://image.tmdb.org/t/p/w500${results.data.poster_path}`])
+                        }
+                        else {
+                            setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, fetchrecommendations.data.results])
+                        }
 
-                   setistv(true);
+                    setistv(true);
 
-                } catch { console.log("Fetch series recommendations from search error.") }
+                    } catch(error) { console.log("Fetch series recommendations from search error.\n-----------"+ error + "------------") }
+                } else {
+                    let tempobj = {name : "Recommendation not found. Pick a different series please !"}
+                    setimgurl([``, [tempobj] ])
+                    errormsg = "";
+                }
             }
             fetchquery();
             setshowrec(true);

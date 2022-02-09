@@ -76,7 +76,6 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
     useEffect(() => {
         let counter = 0;
         let tempobj = {};
-        let tempobj_two = {};
 
         subreddit_list.forEach(item => {
             const fetchcomments = async () => {
@@ -85,8 +84,6 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
 
                 try {
                     const result = await axios(` https://www.reddit.com/r/${item.data.subreddit}/comments/${item.data.id}/${item.data.title}/.json`);
-
-                    if (!result) { console.log("failed") }
                     tempobj[item.data.id] = result.data[0].data.children[0].data;
 
                     counter++;
@@ -97,14 +94,14 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
 
                     }
                 } catch (error) {
-                    console.log("Error: Fetch reddit posts failed.");
+                    console.log("Error: Fetch reddit posts failed.\n-------------------" + error + "-------------------------");
                     tempobj[item.data.id] = {}
                 }
             }
             fetchcomments();
         });
 
-    }, [])
+    }, [subreddit_list])
 
    
     return (<article className="reddit_subcontainer">
@@ -116,7 +113,7 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
         {
             subreddit_list.map(item => (
                 <section className="subreddit_section" key={item.data.id}>
-                 <a href={`https://www.reddit.com/${item.data.permalink}`} target="_blank">
+                 <a href={`https://www.reddit.com/${item.data.permalink}`} target="_blank" rel="noreferrer" >
 
              <section className="subredditpost">     
 
@@ -125,7 +122,7 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
         <p  key={`${item.data.ups} ${subreddit_list[0].data.permalink}`} className="upvotepara">{item.data.ups}</p>
 
         <p className="upvotepara_arrow" key={`${subreddit_list[0].data.permalink} ${subreddit_list[0].data.ups} ${subreddit_list[0].data.permalink}`}>
-        <svg className="upvotesvg" xmlns="http://www.w3.org/2000/svg"  width="3em" height="5rem" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/></g></svg></p> 
+        <svg className="upvotesvg" xmlns="http://www.w3.org/2000/svg"  width="3em" height="5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/></g></svg></p> 
                 </div>
 
                 <div className="subredditpost_left" key={`${item.data.title} ${item.data.author}`}>

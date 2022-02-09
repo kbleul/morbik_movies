@@ -14,7 +14,7 @@ const Viewcharacter = () => {
   const [shownextbtn, set_shownextbtn] = useState(false);
   const [showrecommendation, set_showrecommendation] = useState(false);
   const [suggesttvshow, set_suggesttvshow] = useState(false)
-  const [topimgurl, set_topimgurl] = useState(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg", ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"]])
+  const [topimgurl, set_topimgurl] = useState(["https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg", ["https://image.tmdb.org/t/p/w500/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg"]]);
 
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const Viewcharacter = () => {
   }
 
   return (<article className="subcontainer">
-    <Search setimgurl={set_topimgurl} setshowrec={set_showrecommendation} setshownextbtn={set_shownextbtn} setistv = {set_suggesttvshow}/>
+    <Search setimgurl={set_topimgurl} setshowrec={set_showrecommendation} setshownextbtn={set_shownextbtn} setistv = {set_suggesttvshow} />
     {!showrecommendation && <p className="subtitle">Pick a movie you have watched.</p>}
     <TopImage imgurl={topimgurl} nextbtn={shownextbtn} set_nextbtn={set_shownextbtn} showrec={showrecommendation} setshowrec={set_showrecommendation} istvshow={suggesttvshow} settopimg={set_topimgurl} />
 

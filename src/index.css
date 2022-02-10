@@ -446,7 +446,7 @@ a:visited { border-top: 1px solid green; }
 
 footer {
   margin-top: 3rem;
-  background-color: rgb(238, 238, 238);
+  background-color: rgb(223, 223, 223);
 }
 .creditarticle {
   padding: 3rem;
@@ -460,7 +460,7 @@ footer {
   padding-bottom: 1rem;
 }
 .creditsection:nth-of-type(1):hover,
-.creditsection:nth-of-type(1):focus { border-bottom: 3px solid rgb(49, 7, 105); }
+.creditsection:nth-of-type(1):focus,
 .creditsection:nth-of-type(2):hover,
 .creditsection:nth-of-type(2):focus  { border-bottom: 3px solid green;}
 
@@ -493,7 +493,7 @@ footer {
 .creditsection:nth-of-type(3) a:hover,
 .creditsection:nth-of-type(3) a:focus {
     text-decoration: underline;
-    text-decoration-color: green;
+    text-decoration-color: rgb(0, 2, 128);
 }
 
 .creditsection p {
@@ -505,6 +505,7 @@ footer {
 }
 .lastpara {
   text-align: center;
+  font-family: 'Bebas Neue', cursive;
 }
 /*------------------Mobile Vesrion------------------------------*/
 
@@ -635,6 +636,18 @@ footer {
     width: 30%;
   }
 
+.creditarticle {
+  flex-direction: column;
+}
+.creditsection { 
+  width: 100%;
+  align-self: flex-end;
+}
+.creditsection h3 { text-align: center;}
+.creditsection p {
+ text-align: right;
+}
+.creditsection:nth-of-type(3) { margin-top: 2rem; }
 
 }
 

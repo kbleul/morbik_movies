@@ -4,7 +4,7 @@ import axios from 'axios';
 import loading from './imgs/loading.gif'
 
 
-const RedditPage = ({setshowreddit,set_showreddit_btn}) => {
+const RedditPage = ({ setshowreddit, set_showreddit_btn }) => {
 
     const [reddit, setreddit] = useState([])
     const [subreddit, set_subreddit] = useState([])
@@ -13,9 +13,9 @@ const RedditPage = ({setshowreddit,set_showreddit_btn}) => {
 
     useEffect(() => {
 
-          let temparr = [];
+        let temparr = [];
 
-          const fetchsubreddit = async (item) => {
+        const fetchsubreddit = async (item) => {
 
             const result = await axios(`https://www.reddit.com/r/${item}/.json`);
 
@@ -25,7 +25,7 @@ const RedditPage = ({setshowreddit,set_showreddit_btn}) => {
 
         }
 
-        for (let item of subredditlist) { fetchsubreddit(item);  }
+        for (let item of subredditlist) { fetchsubreddit(item); }
 
     }, [])
 
@@ -45,23 +45,23 @@ const RedditPage = ({setshowreddit,set_showreddit_btn}) => {
 
 
     return (<article>
-       {!show_subreddit && <button onClick={() => {setshowreddit(false); set_showreddit_btn(true)}} className="backtofront_btn_second" >←</button>}
+        {!show_subreddit && <button onClick={() => { setshowreddit(false); set_showreddit_btn(true) }} className="backtofront_btn_second" >←</button>}
         {show_subreddit ? <SubredditPage subreddit_list={subreddit} showsubreddit={set_show_subreddit} /> :
-        <article className='reddit_subcontainer'>
-            {reddit.length === 0 ? <img src={loading} alt="loading" className="loadingimg" /> :
+            <article className='reddit_subcontainer'>
+                {reddit.length === 0 ? <img src={loading} alt="loading" className="loadingimg" /> :
 
-                reddit.map(item => (<section key={item.permalink} className="redditsection"
-                    onClick={() => { getSubreddit(item.subreddit) }}>
+                    reddit.map(item => (<section key={item.permalink} className="redditsection"
+                        onClick={() => { getSubreddit(item.subreddit) }}>
 
-                    <p key={item.subreddit}>{item.subreddit}</p>
-                    <p key={item.subreddit_name_prefixed} className="subreddit_para">{item.subreddit_name_prefixed}</p>
-                    <p key={item.subreddit_type}>{item.subreddit_type}</p>
-                    <p key={item.id} className="subscribers_para">Subscribers - {item.subreddit_subscribers}</p>
-                </section>))
-            }
+                        <p key={item.subreddit}>{item.subreddit}</p>
+                        <p key={item.subreddit_name_prefixed} className="subreddit_para">{item.subreddit_name_prefixed}</p>
+                        <p key={item.subreddit_type}>{item.subreddit_type}</p>
+                        <p key={item.id} className="subscribers_para">Subscribers - {item.subreddit_subscribers}</p>
+                    </section>))
+                }
 
-        </article>
-    }
+            </article>
+        }
     </article>
     );
 };
@@ -101,49 +101,50 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
 
     }, [subreddit_list])
 
-   
+
     return (<article className="reddit_subcontainer">
 
-        <button onClick={() =>{ showsubreddit(false); }} className="backtofront_btn" >←</button>
+        <button onClick={() => { showsubreddit(false); }} className="backtofront_btn" >←</button>
 
 
-        <h2 className="subredditmain_title" key={subreddit_list[0].data.subreddit}>{subreddit_list[0].data.subreddit}</h2>
+        <a href={`https://www.reddit.com/r/${subreddit_list[0].data.subreddit}/`} target="_blank" rel="noreferrer" >
+            <h2 className="subredditmain_title" key={subreddit_list[0].data.subreddit}>{subreddit_list[0].data.subreddit}</h2></a>
         {
             subreddit_list.map(item => (
                 <section className="subreddit_section" key={item.data.id}>
-                 <a href={`https://www.reddit.com/${item.data.permalink}`} target="_blank" rel="noreferrer" >
+                    <a href={`https://www.reddit.com/${item.data.permalink}`} target="_blank" rel="noreferrer" >
 
-             <section className="subredditpost">     
+                        <section className="subredditpost">
 
-                 <div className="upvotecontainer"  key={`${subreddit_list[0].data.permalink} ${subreddit_list[0].data.permalink} ${subreddit_list[0].data.permalink} ${subreddit_list[0].data.permalink}`}>
+                            <div className="upvotecontainer" key={`${subreddit_list[0].data.permalink} ${subreddit_list[0].data.permalink} ${subreddit_list[0].data.permalink} ${subreddit_list[0].data.permalink}`}>
 
-        <p  key={`${item.data.ups} ${subreddit_list[0].data.permalink}`} className="upvotepara">{item.data.ups}</p>
+                                <p key={`${item.data.ups} ${subreddit_list[0].data.permalink}`} className="upvotepara">{item.data.ups}</p>
 
-        <p className="upvotepara_arrow" key={`${subreddit_list[0].data.permalink} ${subreddit_list[0].data.ups} ${subreddit_list[0].data.permalink}`}>
-        <svg className="upvotesvg" xmlns="http://www.w3.org/2000/svg"  width="3em" height="5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/></g></svg></p> 
-                </div>
-
-                <div className="subredditpost_left" key={`${item.data.title} ${item.data.author}`}>
-                    <h4 key={item.data.title}>{item.data.title}</h4>
-
-                    { comment_isfetch && <section>{
-                        subredditcontent_map[item.data.id] !== undefined && 
-                        
-                    <section key={subredditcontent_map[item.data.id].subreddit_id}>
-
-                         <p className="subreddit_selftext" key={subredditcontent_map[item.data.id].selftext}>{subredditcontent_map[item.data.id].selftext}</p>
-               
-
-                         <div className="subredditpost_bottom" key={`${subredditcontent_map[item.data.id].subreddit_id}${subredditcontent_map[item.data.id].subreddit_id}${item.data.author}`}>
-                    <p key={item.data.author}>Submitted by : {item.data.author}</p>
-                            <button  key={`${subredditcontent_map[item.data.id].num_comments} ${subredditcontent_map[item.data.id].subreddit_id}`} >{subredditcontent_map[item.data.id].num_comments} Comments </button>
+                                <p className="upvotepara_arrow" key={`${subreddit_list[0].data.permalink} ${subreddit_list[0].data.ups} ${subreddit_list[0].data.permalink}`}>
+                                    <svg className="upvotesvg" xmlns="http://www.w3.org/2000/svg" width="3em" height="5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" /></g></svg></p>
                             </div>
-                    </section>}
-                    
-                    </section>}
-                </div>
-                    </section> 
-                  </a>
+
+                            <div className="subredditpost_left" key={`${item.data.title} ${item.data.author}`}>
+                                <h4 key={item.data.title}>{item.data.title}</h4>
+
+                                {comment_isfetch && <section>{
+                                    subredditcontent_map[item.data.id] !== undefined &&
+
+                                    <section key={subredditcontent_map[item.data.id].subreddit_id}>
+
+                                        <p className="subreddit_selftext" key={subredditcontent_map[item.data.id].selftext}>{subredditcontent_map[item.data.id].selftext}</p>
+
+
+                                        <div className="subredditpost_bottom" key={`${subredditcontent_map[item.data.id].subreddit_id}${subredditcontent_map[item.data.id].subreddit_id}${item.data.author}`}>
+                                            <p key={item.data.author}>Submitted by : {item.data.author}</p>
+                                            <button key={`${subredditcontent_map[item.data.id].num_comments} ${subredditcontent_map[item.data.id].subreddit_id}`} >{subredditcontent_map[item.data.id].num_comments} Comments </button>
+                                        </div>
+                                    </section>}
+
+                                </section>}
+                            </div>
+                        </section>
+                    </a>
                 </section>
             ))
         }

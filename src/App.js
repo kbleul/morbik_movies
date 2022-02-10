@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Viewcharacter from './viewcharacter'
 import Header from './header';
 import Redditpage from './redditpage';
+import Footer from './fotter';
 
 const App = () => {
 
@@ -16,10 +17,11 @@ const App = () => {
     <article id={`${enter ? "main_container_change" : "main_container"}`}>
 
       {enter ? (<article>
-        <Header setshowreddit={set_showreddit_page} show_subreddits_btn={showreddits_btn} set_showreddit_btn={setshow_redditsbtn}/>
+        <Header setshowreddit={set_showreddit_page} show_subreddits_btn={showreddits_btn} set_showreddit_btn={setshow_redditsbtn} />
 
         {showreddit_page ? <Redditpage setshowreddit={set_showreddit_page} set_showreddit_btn={setshow_redditsbtn}/> : <Viewcharacter />}
 
+          <Footer />
       </article>
       )
         : <>

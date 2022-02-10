@@ -20,8 +20,6 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
 
   useEffect(() => { setrecommendation(imgurl[1][0]); }, [showrec, imgurl]);
 
-  console.log(recommendation.title  )
-  console.log(recommendation.name )
 
   useEffect(() => {
 
@@ -78,7 +76,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
   let firstsection = {
     backgroundImage: `url(https://image.tmdb.org/t/p/w500${imgurl[0]})`,
     backgroundColor: 'gray',
-    height: '70vh',
+    height: '80vh',
     padding: '0',
     width: "79%",
     margin: "0 auto",
@@ -100,7 +98,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     left: "10%",
     backgroundColor: "rgb(95, 58, 58)",
     clipPath: "polygon(60% 0, 100% 0,100% 100%,35% 100%)",
-    height: "70vh",
+    height: "80vh",
     margin: "0 auto",
     padding: "0",
     width: "80%",
@@ -125,7 +123,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     left: "10%",
     backgroundColor: "rgb(95, 58, 58)",
     clipPath: "polygon(60% 0, 100% 0,100% 100%,35% 100%)",
-    height: "70vh",
+    height: "80vh",
     margin: "0 auto",
     padding: "0",
     width: "80%",

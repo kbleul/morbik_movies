@@ -9,7 +9,6 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
   const [backbtn, set_backbtn] = useState(false);
   const [genres, set_genres] = useState([]);
   const [cast, setcast] = useState([])
-  const genremap = new Map();
 
   const isMobileDevice = useMediaQuery({
     query: "(max-device-width: 650px)",
@@ -26,6 +25,8 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
 
   useEffect(() => {
 
+  const genremap = new Map();
+
     if (istvshow) {
 
 
@@ -36,7 +37,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
         fetchgenre.data.genres.map(item => { genremap.set(item.id, item.name); return 0; });
 
         let temparr = [];
-        recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
+        recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); return 0;})
 
         set_genres(temparr);
 
@@ -56,10 +57,10 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
 
         const fetchgenre = await axios("https://api.themoviedb.org/3/genre/movie/list?api_key=6d9ca31c5cabba09160dddad1b991df7&language=en-US");
 
-        fetchgenre.data.genres.map(item => { genremap.set(item.id, item.name); });
+        fetchgenre.data.genres.map(item => { genremap.set(item.id, item.name); return 0;});
 
         let temparr = [];
-        recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); })
+        recommendation.genre_ids.map(item => { temparr.push(genremap.get(item)); return 0;})
 
         set_genres(temparr);
 
@@ -110,7 +111,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     top: "0",
     left: "0",
     backgroundColor: "rgb(95, 58, 58)",
-    clipPath: "polygon(70% 0, 100% 0,100% 100%,30% 100%)",
+    clipPath: "polygon(70% 0px, 100% 0px, 100% 100%, 0% 100%)",
     height: "60vh",
     margin: "0 auto",
     padding: "0",
@@ -135,7 +136,7 @@ const TopImage = ({ imgurl, nextbtn, set_nextbtn, showrec, setshowrec, istvshow,
     top: "0",
     left: "0",
     backgroundColor: "rgb(95, 58, 58)",
-    clipPath: "polygon(70% 0, 100% 0,100% 100%,30% 100%)",
+    clipPath: "polygon(70% 0px, 100% 0px, 100% 100%, 0% 100%)",
     height: "60vh",
     margin: "0 auto",
     padding: "0",

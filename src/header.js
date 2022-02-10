@@ -1,12 +1,11 @@
-import React , {useState}from 'react';
+import React from 'react';
 import logo from '././imgs/logo/logo.jpg'
 
-const Header = ({setshowreddit}) => {
-   const [show_subreddits_btn, setshow_subreddits_btn] = useState(true);
+const Header = ({setshowreddit,show_subreddits_btn,set_showreddit_btn}) => {
   return (
       <header>
         <img src={logo} alt="logo" />
-      {show_subreddits_btn &&  <button className="subreddit_btn" onClick={() => { setshowreddit(true); setshow_subreddits_btn(false)}}>Subreddits</button>}
+      {show_subreddits_btn &&  <button className="subreddit_btn" onClick={() => { setshowreddit(true); set_showreddit_btn(false)}}>Subreddits</button>}
       </header>
   )
 };

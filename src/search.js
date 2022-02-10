@@ -24,7 +24,7 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
 
                 set_searchseggestions(response.data.results)
 
-                searchsuggestions.map(item => { mapstate.set(item.title, item.id) })
+                searchsuggestions.map(item => { mapstate.set(item.title, item.id); return 0;})
             set_showsuggestionbox(true);
 
                 } catch(error) { console.log("Fetch movie search recommendation failed") }
@@ -39,7 +39,7 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
                 const response = await axios(`https://api.themoviedb.org/3/search/tv?api_key=6d9ca31c5cabba09160dddad1b991df7&query=${input}`);
                 set_searchseggestions(response.data.results)
   
-                searchsuggestions.map(item => { mapstate.set(item.name, item.id) })
+                searchsuggestions.map(item => { mapstate.set(item.name, item.id); return 0; })
             set_showsuggestionbox(true);
        
 
@@ -47,12 +47,11 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
 
             }
             fetchquery();
-        }}
-    }, [input, searchtvshow]);
+        }} else {  set_showsuggestionbox(false)  }
+    }, [input, searchtvshow,searchsuggestions,mapstate]);
 
     const handleSearch = event => {
         event.preventDefault();
-        set_showsuggestionbox(false)
 
         if(!searchtvshow){
 
@@ -61,7 +60,6 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
             let errormsg = "";
             try {
                 results = await axios(`https://api.themoviedb.org/3/movie/${mapstate.get(input)}?api_key=6d9ca31c5cabba09160dddad1b991df7`);
-                console.log(results.data.Status)
    
             } catch(error) {errormsg = error;  console.log("Fetch search movies results failed\n-----------"+ error + "------------") }
 
@@ -76,16 +74,19 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
                         setimgurl([`https://image.tmdb.org/t/p/w500${results.data.poster_path}`, fetchrecommendations.data.results])
                     }
                         setistv(false);
+                        setinput("");
                 } catch(error) {    console.log("Fetch movies recommendations from search error.\n-----------"+ error + "------------") }
             } else {
                 let tempobj = {title : "Recommendation not found. Pick a different movie please !"}
                 setimgurl([``, [tempobj] ])
+                setinput("");
                 errormsg = "";
             }
         }
         fetchquery();
         setshowrec(true);
         setshownextbtn(true);
+        set_showsuggestionbox(false)
         }
         else {
 
@@ -111,17 +112,22 @@ const Search = ({ setimgurl, setshowrec, setshownextbtn , setistv}) => {
                         }
 
                     setistv(true);
+                    setinput("");
 
                     } catch(error) { console.log("Fetch series recommendations from search error.\n-----------"+ error + "------------") }
                 } else {
                     let tempobj = {name : "Recommendation not found. Pick a different series please !"}
                     setimgurl([``, [tempobj] ])
+                    setinput("");
+
                     errormsg = "";
                 }
             }
             fetchquery();
             setshowrec(true);
             setshownextbtn(true);
+            set_showsuggestionbox(false)
+
         }
 
     }

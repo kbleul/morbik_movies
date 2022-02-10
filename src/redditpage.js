@@ -4,30 +4,28 @@ import axios from 'axios';
 import loading from './imgs/loading.gif'
 
 
-const RedditPage = ({setshowreddit}) => {
+const RedditPage = ({setshowreddit,set_showreddit_btn}) => {
 
     const [reddit, setreddit] = useState([])
     const [subreddit, set_subreddit] = useState([])
     const [show_subreddit, set_show_subreddit] = useState(false);
 
+
     useEffect(() => {
 
-        let temparr = [];
+          let temparr = [];
 
-        for (let item of subredditlist) {
-            const fetchsubreddit = async () => {
+          const fetchsubreddit = async (item) => {
 
-                const result = await axios(`https://www.reddit.com/r/${item}/.json`);
+            const result = await axios(`https://www.reddit.com/r/${item}/.json`);
 
-                temparr.push(result.data.data.children[0].data);
+            temparr.push(result.data.data.children[0].data);
 
-                if (temparr.length === 39) { setreddit(temparr); temparr = []; }
-
-            }
-
-            fetchsubreddit();
+            if (temparr.length === 39) { setreddit(temparr); temparr = []; }
 
         }
+
+        for (let item of subredditlist) { fetchsubreddit(item);  }
 
     }, [])
 
@@ -47,7 +45,7 @@ const RedditPage = ({setshowreddit}) => {
 
 
     return (<article>
-       {!show_subreddit && <button onClick={() => setshowreddit(false)} className="backtofront_btn_second" >←</button>}
+       {!show_subreddit && <button onClick={() => {setshowreddit(false); set_showreddit_btn(true)}} className="backtofront_btn_second" >←</button>}
         {show_subreddit ? <SubredditPage subreddit_list={subreddit} showsubreddit={set_show_subreddit} /> :
         <article className='reddit_subcontainer'>
             {reddit.length === 0 ? <img src={loading} alt="loading" className="loadingimg" /> :
@@ -106,7 +104,7 @@ const SubredditPage = ({ subreddit_list, showsubreddit }) => {
    
     return (<article className="reddit_subcontainer">
 
-        <button onClick={() => showsubreddit(false)} className="backtofront_btn" >←</button>
+        <button onClick={() =>{ showsubreddit(false); }} className="backtofront_btn" >←</button>
 
 
         <h2 className="subredditmain_title" key={subreddit_list[0].data.subreddit}>{subreddit_list[0].data.subreddit}</h2>

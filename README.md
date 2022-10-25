@@ -3,7 +3,8 @@
 This project utilized theMovieDB api show different movies and series and user can get a movie recommendation based on a similar movie they have seen before. 
 
     - The movies can be filtered and searched by movie title. 
-    - It also suggests d/t movie subreddits that discuss movies by using the reddit api, also found in rapid api.
+    - It also suggests d/t movie subreddits that discuss movies by using the reddit api, 
+      also found in rapid api.
 
 <br/>
     
